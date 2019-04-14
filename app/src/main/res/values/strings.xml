@@ -1,0 +1,61 @@
+<resources>
+    <string name="app_name">The Weather</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="configure">Configure</string>
+    <string name="add_widget">Add widget</string>
+    <string name="google_map_API_key">AIzaSyAsvRrYBZ770RpBDQNsbaOCsz3XZjD9Vc8</string>
+    <string name="title">Weather Application</string>
+    <string name="gps_network_not_enabled">GPS Network not enabled</string>
+    <string name="open_location_settings">Setting</string>
+    <string name="cancel">Cancel</string>
+    <string name="gps_network_enabled">GPS Network enable</string>
+    <string name="Humidity">Humidity</string>
+    <string name="Pressure">Pressure</string>
+    <string name="WindSpeed">Wind Speed</string>
+    <string name="DewPoint">Dew Point</string>
+    <string name="CloudCover">Cloud Cover</string>
+    <string name="UVIndex">UV Index</string>
+    <string name="Visibility">Visibility</string>
+    <string name="Ozone">Ozone</string>
+
+    <string name="aqi_good">Good</string>
+    <string name="aqi_moderate">Moderate</string>
+    <string name="aqi_unhealthy_sensitive">Unhealthy for Sensitive Group</string>
+    <string name="aqi_unhealthy">Unhealthy</string>
+    <string name="aqi_very_unhealthy">Very Unhealthy</string>
+    <string name="aqi_hazardous">Hazardous</string>
+
+    <string name="aqi_good_des">Air quality is considered satisfactory</string>
+    <string name="aqi_moderate_des">Air quality is acceptable</string>
+    <string name="aqi_unhealthy_sensitive_des">Members of sensitive groups may experience health effects</string>
+    <string name="aqi_unhealthy_des">Everyone may begin to experience health effects</string>
+    <string name="aqi_very_unhealthy_des">Everyone may experience serious health effects</string>
+    <string name="aqi_hazardous_des">Health warning of emergency conditions</string>
+
+    <string name="pref_temp_unit">Temperature</string>
+    <string name="pref_temp_default_value">°C</string>
+    <string name="pref_temp_default_summary">°C</string>
+    <string-array name="pref_temp_entries">
+        <item>°C</item>
+        <item>°F</item>
+    </string-array>
+
+    <string name="pref_distance_unit">Distance</string>
+    <string name="pref_distance_default_value">km</string>
+    <string-array name="pref_distance_entries">
+        <item>km</item>
+        <item>miles</item>
+    </string-array>
+
+    <string name="pref_speed_unit">Speed</string>
+    <string name="pref_speed_default_value">m/s</string>
+    <string-array name="pref_speed_entries">
+        <item>km/h</item>
+        <item>mph</item>
+        <item>m/s</item>
+    </string-array>
+
+    <string name="pref_about">About</string>
+</resources>

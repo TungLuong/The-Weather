@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#2962FF</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000</color>
+    <color name="black_80">#cc000000</color>
+    <color name="red">#DC143C</color>
+    <color name="book_loading_background">@color/black</color>
+    <color name="book_loading_book">@color/white</color>
+    <color name="book_loading_page">@color/black</color>
+
+    <color name="aqi_good">#009866</color>
+    <color name="aqi_moderate">#fedd39</color>
+    <color name="aqi_unhealthy_sensitive">#fe9835</color>
+    <color name="aqi_unhealthy">#cb0232</color>
+    <color name="aqi_very_unhealthy">#660697</color>
+    <color name="aqi_hazardous">#7d0121</color>
+</resources>
