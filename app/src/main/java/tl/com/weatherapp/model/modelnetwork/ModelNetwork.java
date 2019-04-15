@@ -286,7 +286,7 @@ public class ModelNetwork {
                             }
                             String strAirQuality = gson.toJson(airQuality);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString(Common.SHARE_PREF_AIR_QUALITY_AT + addressID, strAirQuality);
+                            editor.putString(Common.SHARE_PREF_AIR_QUALITY_KEY_AT + addressID, strAirQuality);
                             editor.commit();
                             airQualityList.set(position, airQuality);
                             if (!isMainActivityReceiver && onDataReady()) {
@@ -311,7 +311,7 @@ public class ModelNetwork {
                             }
                         }
 
-                        String strAirQuality = sharedPreferences.getString(Common.SHARE_PREF_AIR_QUALITY_AT + addressID, "");
+                        String strAirQuality = sharedPreferences.getString(Common.SHARE_PREF_AIR_QUALITY_KEY_AT + addressID, "");
                         AirQuality airQuality = gson.fromJson(strAirQuality, AirQuality.class);
                         airQualityList.set(position, airQuality);
                         if (onDataReady()) {
@@ -363,6 +363,7 @@ public class ModelNetwork {
 
                     Intent intent = new Intent(mContext, MainActivity.class);
                     intent.putExtra(Common.INTENT_ADDRESS_ID, addressID);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_TASK_ON_HOME);
                     PendingIntent pendingIntent = PendingIntent.getActivity(mContext, id, intent, 0);
                     views.setOnClickPendingIntent(R.id.linear_layout, pendingIntent);
                     appWidgetManager.updateAppWidget(id, views);
@@ -437,6 +438,8 @@ public class ModelNetwork {
         editor.remove(Common.SHARE_PREF_LAT_KEY_AT + addressId);
         editor.remove(Common.SHARE_PREF_LAT_KEY_AT + addressId);
         editor.remove(Common.SHARE_PREF_ADDRESS_NAME_KEY_AT + addressId);
+        editor.remove(Common.SHARE_PREF_WEATHER_KEY_AT+addressId);
+        editor.remove(Common.SHARE_PREF_AIR_QUALITY_KEY_AT +addressId);
         editor.remove(Common.SHARE_PREF_ADDRESS_ID_KEY_AT + position);
 
         for (int i = position; i < weatherResultList.size() - 1; i++) {
@@ -450,6 +453,7 @@ public class ModelNetwork {
 
 //        editor = sharedPreferences.edit();
         weatherResultList.remove(position);
+        airQualityList.remove(position);
 //        ((MainActivity) getActivity()).getIsReceiver().remove(position);
 //        ((MainActivity) getActivity()).setTotalAddress(totalAddress - 1);
 //        for (int i = position; i < weatherResultList.size(); i++) {
@@ -458,11 +462,15 @@ public class ModelNetwork {
 //            editor.putString("ADDRESS_NAME" + i, (String) weatherResultList.get(i).getAddress());
 //        }
 //        editor.commit();
+        if (position <= curPositionPager) curPositionPager--;
     }
 
     public void moveItem(int oldPo, int newPo) {
         WeatherResult weatherResult = weatherResultList.remove(oldPo);
         weatherResultList.add(newPo, weatherResult);
+        AirQuality airQuality = airQualityList.remove(oldPo);
+        airQualityList.add(newPo,airQuality);
+
         SharedPreferences sharedPreferences = mContext.getSharedPreferences(Common.DATA, MODE_PRIVATE);
         int addressId = sharedPreferences.getInt(Common.SHARE_PREF_ADDRESS_ID_KEY_AT + oldPo, -1);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -504,7 +512,9 @@ public class ModelNetwork {
         editor.commit();
 
         weatherResultList.add(null);
+        airQualityList.add(null);
         updateWeatherInformation(lat, lng, newId, addressName, NO_UPDATE_WIDGET);
+        updateAirQualityIndex(lat,lng,newId);
     }
 
     public void setCurrentPagerByAddressId(int addressId) {

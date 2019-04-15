@@ -29,7 +29,7 @@ public class Common {
     public static final int NO_UPDATE_WIDGET = -2 ;
     public static final String SHARE_PREF_WEATHER_KEY_AT = "SHARE_PREF_WEATHER_KEY_AT" ;
     public static final int TOTAL_ATTRIBUTE_WEATHER = 8;
-    public static final String SHARE_PREF_AIR_QUALITY_AT = "SHARE_PREF_AIR_QUALITY_AT" ;
+    public static final String SHARE_PREF_AIR_QUALITY_KEY_AT = "SHARE_PREF_AIR_QUALITY_KEY_AT" ;
 
     //    public static Location current_location = new Location("");
     public static String ACTION_GET_WEATHER_RESULT_BY_ADDRESS_ID = "ACTION_GET_WEATHER_RESULT_BY_ADDRESS_ID";
