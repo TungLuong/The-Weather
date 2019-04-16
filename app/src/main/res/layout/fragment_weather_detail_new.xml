@@ -566,7 +566,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Good"
+                                android:text="@string/aqi_good"
                                 android:textColor="#ffffff"
                                 android:fontFamily="@font/roboto_thin"
                                 android:textSize="12sp"/>
@@ -575,7 +575,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="right"
-                                android:text="Hazardous"
+                                android:text="@string/aqi_hazardous"
                                 android:textColor="#ffffff"
                                 android:fontFamily="@font/roboto_thin"
                                 android:textSize="12sp"/>
