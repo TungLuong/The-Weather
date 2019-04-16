@@ -590,7 +590,7 @@
                     android:layout_marginTop="8dp"
                     android:orientation="vertical">
                     <TextView
-                        android:text="@string/next_24_hours_title"
+                        android:text="@string/next_7_days_title"
                         android:textStyle="bold"
                         android:layout_marginBottom="8dp"
                         android:layout_marginLeft="8dp"
