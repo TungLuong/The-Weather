@@ -1,61 +1,91 @@
 <resources>
-    <string name="app_name">The Weather</string>
+    <string name="app_name" translatable="false">The Weather</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="appwidget_text">EXAMPLE</string>
-    <string name="configure">Configure</string>
-    <string name="add_widget">Add widget</string>
-    <string name="google_map_API_key">AIzaSyAsvRrYBZ770RpBDQNsbaOCsz3XZjD9Vc8</string>
-    <string name="title">Weather Application</string>
-    <string name="gps_network_not_enabled">GPS Network not enabled</string>
-    <string name="open_location_settings">Setting</string>
-    <string name="cancel">Cancel</string>
-    <string name="gps_network_enabled">GPS Network enable</string>
-    <string name="Humidity">Humidity</string>
-    <string name="Pressure">Pressure</string>
-    <string name="WindSpeed">Wind Speed</string>
-    <string name="DewPoint">Dew Point</string>
-    <string name="CloudCover">Cloud Cover</string>
-    <string name="UVIndex">UV Index</string>
-    <string name="Visibility">Visibility</string>
+    <string name="quit_tiltle" translatable="true">Quit</string>
+    <string name="quit_message" translatable="true">Do you really want to quit?</string>
+    <string name="back_text" translatable="true">Back</string>
+
+    <string name="setting" translatable="true">Setting</string>
+    <string name="appwidget_text" translatable="false">EXAMPLE</string>
+    <string name="configure" translatable="false">Configure</string>
+    <string name="add_widget" translatable="false">Add widget</string>
+    <string name="google_map_API_key" translatable="false">AIzaSyAsvRrYBZ770RpBDQNsbaOCsz3XZjD9Vc8</string>
+    <string name="title" translatable="false">Weather Application</string>
+    <string name="gps_network_not_enabled" translatable="true">GPS Network not enabled</string>
+    <string name="open_location_settings" translatable="true">Setting</string>
+    <string name="cancel" translatable="true">Cancel</string>
+    <string name="gps_network_enabled" translatable="false">GPS Network enable</string>
+    <string name="Humidity" translatable="true">Humidity</string>
+    <string name="Pressure" translatable="true">Pressure</string>
+    <string name="WindSpeed" translatable="true">Wind Speed</string>
+    <string name="DewPoint" translatable="true">Dew Point</string>
+    <string name="CloudCover" translatable="true">Cloud Cover</string>
+    <string name="UVIndex" translatable="true">UV Index</string>
+    <string name="Visibility" translatable="true">Visibility</string>
     <string name="Ozone">Ozone</string>
+    <string name="last_update" translatable="true">Last update</string>
+    <string name="delete" translatable="true">Xóa</string>
 
-    <string name="aqi_good">Good</string>
-    <string name="aqi_moderate">Moderate</string>
-    <string name="aqi_unhealthy_sensitive">Unhealthy for Sensitive Group</string>
-    <string name="aqi_unhealthy">Unhealthy</string>
-    <string name="aqi_very_unhealthy">Very Unhealthy</string>
-    <string name="aqi_hazardous">Hazardous</string>
+    <string name="details_title" translatable="true">Details</string>
+    <string name="next_24_hours_title" translatable="true">Next 24 Hours</string>
+    <string name="air_quality_index_title" translatable="true">Air Quality Index</string>
+    <string name="next_7_days_title" translatable="true">Next 7 Days</string>
 
-    <string name="aqi_good_des">Air quality is considered satisfactory</string>
-    <string name="aqi_moderate_des">Air quality is acceptable</string>
-    <string name="aqi_unhealthy_sensitive_des">Members of sensitive groups may experience health effects</string>
-    <string name="aqi_unhealthy_des">Everyone may begin to experience health effects</string>
-    <string name="aqi_very_unhealthy_des">Everyone may experience serious health effects</string>
-    <string name="aqi_hazardous_des">Health warning of emergency conditions</string>
+    <string name="aqi_good" translatable="true">Good</string>
+    <string name="aqi_moderate" translatable="true">Moderate</string>
+    <string name="aqi_unhealthy_sensitive" translatable="true">Unhealthy for Sensitive Group</string>
+    <string name="aqi_unhealthy" translatable="true">Unhealthy</string>
+    <string name="aqi_very_unhealthy" translatable="true">Very Unhealthy</string>
+    <string name="aqi_hazardous" translatable="true">Hazardous</string>
 
-    <string name="pref_temp_unit">Temperature</string>
-    <string name="pref_temp_default_value">°C</string>
-    <string name="pref_temp_default_summary">°C</string>
+    <string name="aqi_good_des" translatable="true">Air quality is considered satisfactory</string>
+    <string name="aqi_moderate_des" translatable="true">Air quality is acceptable</string>
+    <string name="aqi_unhealthy_sensitive_des" translatable="true">Members of sensitive groups may experience health effects</string>
+    <string name="aqi_unhealthy_des" translatable="true">Everyone may begin to experience health effects</string>
+    <string name="aqi_very_unhealthy_des" translatable="true">Everyone may experience serious health effects</string>
+    <string name="aqi_hazardous_des" translatable="true">Health warning of emergency conditions</string>
+
+    <string name="pref_temp_title" translatable="true">Temperature</string>
+    <string name="pref_temp_unit" translatable="false">Temperature</string>
+    <string name="pref_temp_default_value" translatable="false">°C</string>
+    <string name="pref_temp_default_summary" translatable="false">°C</string>
     <string-array name="pref_temp_entries">
         <item>°C</item>
         <item>°F</item>
     </string-array>
-
-    <string name="pref_distance_unit">Distance</string>
-    <string name="pref_distance_default_value">km</string>
+    <string name="pref_distance_title" translatable="true">Distance</string>
+    <string name="pref_distance_unit" translatable="false">Distance</string>
+    <string name="pref_distance_default_value" translatable="false">km</string>
     <string-array name="pref_distance_entries">
         <item>km</item>
         <item>miles</item>
     </string-array>
-
-    <string name="pref_speed_unit">Speed</string>
-    <string name="pref_speed_default_value">m/s</string>
+    <string name="pref_speed_title" translatable="true">Speed</string>
+    <string name="pref_speed_unit" translatable="false">Speed</string>
+    <string name="pref_speed_default_value" translatable="false">m/s</string>
     <string-array name="pref_speed_entries">
         <item>km/h</item>
         <item>mph</item>
         <item>m/s</item>
     </string-array>
+    <string name="pref_lang_title" translatable="true">Current Language</string>
+    <string name="pref_lang_key" translatable="false">Language</string>
+    <string name="pref_lang_default_entries" translatable="false">English</string>
+    <string name="pref_lang_default_value" translatable="false">en</string>
+    <string-array name="pref_lang_entries">
+        <item>English</item>
+        <item>Tiếng Việt</item>
+    </string-array>
+    <string-array name="pref_lang_values">
+        <item>en</item>
+        <item>vi</item>
+    </string-array>
 
-    <string name="pref_about">About</string>
+    <string name="pref_unit_group_title" translatable="true">Units</string>
+    <string name="pref_language_group_title" translatable="true">Language</string>
+    <string name="pref_other_group_title" translatable="true">Others</string>
+
+    <string name="pref_feedback" translatable="true">Feedback</string>
+    <string name="pref_help" translatable="true">Help</string>
+    <string name="pref_about" translatable="true">About</string>
 </resources>

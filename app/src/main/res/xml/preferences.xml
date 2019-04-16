@@ -2,31 +2,44 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory
-        android:title="Units">
+        android:title="@string/pref_unit_group_title">
     <ListPreference
         android:key="@string/pref_temp_unit"
-        android:title="@string/pref_temp_unit"
+        android:title="@string/pref_temp_title"
         android:defaultValue="@string/pref_temp_default_value"
         android:entries="@array/pref_temp_entries"
         android:entryValues="@array/pref_temp_entries">
     </ListPreference>
         <ListPreference
             android:key="@string/pref_distance_unit"
-            android:title="@string/pref_distance_unit"
+            android:title="@string/pref_distance_title"
             android:entries="@array/pref_distance_entries"
             android:defaultValue="@string/pref_distance_default_value"
             android:entryValues="@array/pref_distance_entries">
         </ListPreference>
         <ListPreference
             android:key="@string/pref_speed_unit"
-            android:title="@string/pref_speed_unit"
+            android:title="@string/pref_speed_title"
             android:entries="@array/pref_speed_entries"
             android:defaultValue="@string/pref_speed_default_value"
             android:entryValues="@array/pref_speed_entries">
         </ListPreference>
     </PreferenceCategory>
     <PreferenceCategory
-        android:title="Other">
+        android:title="@string/pref_language_group_title">
+        <ListPreference
+            android:key="@string/pref_lang_key"
+            android:title="@string/pref_lang_title"
+            android:defaultValue="@string/pref_lang_default_value"
+            android:entries="@array/pref_lang_entries"
+            android:entryValues="@array/pref_lang_values" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/pref_other_group_title">
+        <Preference
+            android:title="@string/pref_feedback"/>
+        <Preference
+            android:title="@string/pref_help"/>
         <Preference
             android:title="@string/pref_about"/>
     </PreferenceCategory>

@@ -104,7 +104,7 @@
                     android:orientation="vertical"
                     android:background="@color/black">
                     <TextView
-                        android:text="Details"
+                        android:text="@string/details_title"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
                         android:layout_marginLeft="8dp"
@@ -351,7 +351,7 @@
                     android:padding="8dp"
                     android:orientation="vertical">
                     <TextView
-                        android:text="Next 24 Hours"
+                        android:text="@string/next_24_hours_title"
                         android:layout_marginBottom="8dp"
                         android:layout_marginLeft="8dp"
                         android:layout_width="match_parent"
@@ -372,7 +372,7 @@
                     android:orientation="vertical"
                     android:padding="8dp">
                     <TextView
-                        android:text="Air Quality Index"
+                        android:text="@string/air_quality_index_title"
                         android:layout_marginBottom="8dp"
                         android:layout_marginLeft="8dp"
                         android:layout_width="match_parent"
@@ -587,9 +587,10 @@
                     android:layout_height="wrap_content"
                     android:background="@color/black"
                     android:padding="8dp"
+                    android:layout_marginTop="8dp"
                     android:orientation="vertical">
                     <TextView
-                        android:text="Next 7 Days"
+                        android:text="@string/next_24_hours_title"
                         android:textStyle="bold"
                         android:layout_marginBottom="8dp"
                         android:layout_marginLeft="8dp"

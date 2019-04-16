@@ -1,8 +1,11 @@
 package tl.com.weatherapp.view.main;
 
 import android.Manifest;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
@@ -21,6 +24,7 @@ import com.victor.loading.book.BookLoading;
 import com.victor.loading.newton.NewtonCradleLoading;
 
 import java.util.List;
+import java.util.Locale;
 
 import tl.com.weatherapp.R;
 import tl.com.weatherapp.common.Common;
@@ -58,6 +62,13 @@ public class MainActivity extends BaseActivity implements IMainView {
             int addressId = extras.getInt(Common.INTENT_ADDRESS_ID);
             mainPresenter.setCurrentPagerByAddressId(addressId);
         }
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String language = sharedPreferences.getString(getString(R.string.pref_lang_key),getString(R.string.pref_lang_default_value));
+        Locale locale = new Locale(language);
+        Locale.setDefault(locale);
+        Configuration configuration = new Configuration();
+        getBaseContext().getResources().updateConfiguration(configuration,
+                getBaseContext().getResources().getDisplayMetrics());
         setContentView(R.layout.activity_main);
         initView();
         //Request permission

@@ -65,7 +65,7 @@ public class ItemWeatherAddressAdapter extends RecyclerSwipeAdapter<ItemWeatherA
             public void onClick(View v) {
                 mItemManger.removeShownLayouts(holder.swipeLayout);
                 if(position == Common.CURRENT_ADDRESS_ID){
-                    Toast.makeText(mContext,"Cannot remove location",Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(mContext,"Cannot remove location",Toast.LENGTH_SHORT).show();
                     notifyDataSetChanged();
                 }else {
                     iListenerWeatherAddressAdapter.deleteItem(position);
@@ -108,7 +108,7 @@ public class ItemWeatherAddressAdapter extends RecyclerSwipeAdapter<ItemWeatherA
         holder.tvAddress.setText(weatherResultList.get(position).getAddress());
         String lastTimeUpdate = "";
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            lastTimeUpdate = "Last update " + Common.convertUnixToTime(weatherResultList.get(position).getCurrently().getTime());
+            lastTimeUpdate = mContext.getString(R.string.last_update) +  ": " + Common.convertUnixToTime(weatherResultList.get(position).getCurrently().getTime());
         }
         holder.tvTimeLastUpdate.setText(lastTimeUpdate);
 

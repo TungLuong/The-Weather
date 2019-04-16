@@ -23,7 +23,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".view.settings.SettingActivity"
             android:theme="@style/PreferencesTheme"
-            android:label="Settings">
+            android:label="@string/setting">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.main.MainActivity" />

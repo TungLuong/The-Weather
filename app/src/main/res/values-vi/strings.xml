@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="gps_network_not_enabled">Gps đang tắt</string>
+    <string name="open_location_settings">Cài đặt</string>
+    <string name="cancel">Hủy bỏ</string>
+    <string name="Humidity">Độ ẩm</string>
+    <string name="Pressure">Áp suất</string>
+    <string name="WindSpeed">Gió</string>
+    <string name="DewPoint">Điểm sương</string>
+    <string name="CloudCover">Lượng mây</string>
+    <string name="UVIndex">Chỉ số UV</string>
+    <string name="Visibility">Tầm nhìn</string>
+    <string name="Ozone">Ozone</string>
+    <string name="details_title">Chi tiết</string>
+    <string name="next_24_hours_title">24 giờ tới</string>
+    <string name="air_quality_index_title">Chỉ số chất lượng không khí</string>
+    <string name="next_7_days_title">7 ngày tới</string>
+    <string name="aqi_good">Tốt</string>
+    <string name="aqi_moderate">Trung bình</string>
+    <string name="aqi_unhealthy_sensitive">Không tốt cho người nhạy cảm</string>
+    <string name="aqi_unhealthy">Có hại cho sức khỏe</string>
+    <string name="aqi_very_unhealthy">Rất có hại cho sức khỏe</string>
+    <string name="aqi_hazardous">Nguy hiểm</string>
+    <string name="aqi_good_des">Chất lượng không khí được xem là đạt chuẩn</string>
+    <string name="aqi_moderate_des">Chất lượng không khí ở mức chấp nhận được</string>
+    <string name="aqi_unhealthy_sensitive_des">Nhóm người nhạy cảm có thể chịu ảnh hưởng sức khỏe</string>
+    <string name="aqi_unhealthy_des">Mọi người đều có thể sẽ chịu tác động tới sức khỏe</string>
+    <string name="aqi_hazardous_des">Tất cả mọi người có thể chịu tác động nghiêm trọng tới sức khỏe</string>
+    <string name="aqi_very_unhealthy_des">Đa số mọi người đều bị ảnh hưởng</string>
+    <string name="pref_temp_title">Nhiệt độ</string>
+    <string name="pref_distance_title">Khoảng cách</string>
+    <string name="pref_speed_title">Vận tốc</string>
+    <string name="pref_about">About</string>
+    <string name="pref_feedback">Phản hồi</string>
+    <string name="pref_help">Trợ giúp</string>
+    <string name="pref_unit_group_title">Đơn vị đo</string>
+    <string name="pref_language_group_title">Ngôn ngữ</string>
+    <string name="pref_other_group_title">Khác</string>
+    <string name="pref_lang_title">Ngôn ngữ hiện tại</string>
+    <string name="last_update">Lần cuối</string>
+    <string name="delete">Xóa</string>
+    <string name="quit_tiltle">Thoát</string>
+    <string name="quit_message">Bạn thực sự muốn thoát?</string>
+    <string name="back_text">Quay lại</string>
+    <string name="setting">Cài đặt</string>
+</resources>

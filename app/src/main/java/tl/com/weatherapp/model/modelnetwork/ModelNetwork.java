@@ -356,7 +356,7 @@ public class ModelNetwork {
                             .append(weatherResult.getCurrently().getIcon())
                             .append(".png").toString()).into(views, R.id.img_icon, new int[]{id});
                     views.setTextViewText(R.id.tv_temp, temp);
-                    String lastTimeUpdate = "Last update " + Common.convertUnixToTime(weatherResult.getCurrently().getTime());
+                    String lastTimeUpdate = mContext.getString(R.string.last_update) + ": " + Common.convertUnixToTime(weatherResult.getCurrently().getTime());
                     views.setTextViewText(R.id.tv_time_update, lastTimeUpdate);
                     String lastLocation = weatherResult.getAddress();
                     views.setTextViewText(R.id.tv_location, lastLocation);
@@ -383,7 +383,7 @@ public class ModelNetwork {
                         .append(weatherResult.getCurrently().getIcon())
                         .append(".png").toString()).into(views, R.id.img_icon, new int[]{appWidgetId});
                 views.setTextViewText(R.id.tv_temp, temp);
-                String lastTimeUpdate = "Last update " + Common.convertUnixToTime(weatherResult.getCurrently().getTime());
+                String lastTimeUpdate = mContext.getString(R.string.last_update) + ": " + Common.convertUnixToTime(weatherResult.getCurrently().getTime());
                 views.setTextViewText(R.id.tv_time_update, lastTimeUpdate);
                 String lastLocation = weatherResult.getAddress();
                 views.setTextViewText(R.id.tv_location, lastLocation);

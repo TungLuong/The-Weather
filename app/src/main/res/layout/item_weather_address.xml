@@ -23,7 +23,7 @@
             android:background="#ff0000"
             android:gravity="center"
             android:textSize="16sp"
-            android:text="Delete"
+            android:text="@string/delete"
             android:fontFamily="@font/roboto_thin"
             android:textColor="#fff"/>
 
@@ -93,7 +93,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
-                    android:text="Lai Xa"
+                    android:text=""
                     android:fontFamily="@font/roboto_thin"
                     android:textColor="@color/white"
                     android:textSize="25sp" />
@@ -114,7 +114,7 @@
                 android:layout_above="@id/location"
                 android:layout_marginLeft="10dp"
                 android:layout_marginBottom="5dp"
-                android:text="last update : "
+                android:text="@string/last_update"
                 android:fontFamily="@font/roboto_thin"
                 android:textColor="@color/white"
                 android:textSize="15sp" />
