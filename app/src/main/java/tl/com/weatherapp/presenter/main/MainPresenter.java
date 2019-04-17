@@ -41,40 +41,42 @@ public class MainPresenter implements IMainPresenter {
 
     private void registerBroadcastReceiver() {
         IntentFilter filter = new IntentFilter();
-       filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         filter.addAction("android.location.PROVIDERS_CHANGED");
 
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (intent.getAction().equals("android.net.conn.CONNECTIVITY_CHANGE")) {
-//                    if (isConnected(mContext)) {
                     if (!isConnected(mContext)) {
-                        dialogInternet = buildDialogInternet(mContext).show();
-                        //Toast.makeText(mContext, "No Internet Connection", Toast.LENGTH_SHORT).show();
+                        if(dialogInternet == null) {
+                            dialogInternet = buildDialogInternet(mContext).show();
+                        }else dialogInternet.show();
                     }
                     else {
-                        //Toast.makeText(mContext, "Internet Connection", Toast.LENGTH_SHORT).show();
+                        if (dialogInternet != null)
+                            dialogInternet.dismiss();
                         if (!isEnabledLocation(mContext)) {
-                            //Toast.makeText(mContext, R.string.gps_network_not_enabled, Toast.LENGTH_SHORT).show();
+                            if (dialogLocation == null) {
+                                dialogLocation = buildDialogLocation(context).show();
+                            }else dialogLocation.show();
                         }
                     }
 
-//                        if (dialogInternet != null) {
-//                            dialogInternet.cancel();
-//                        }
-//                    }
                     modelNetwork.create(mContext);
                     modelNetwork.loadDataForMainPresenter();
 
 
                 } else if (intent.getAction().equals("android.location.PROVIDERS_CHANGED")) {
-                    if (isEnabledLocation(mContext)) {
+                    if (!isEnabledLocation(mContext)) {
+                        if (dialogLocation == null) {
+                            dialogLocation = buildDialogLocation(context).show();
+                        }else dialogLocation.show();
+
+                    } else {
                         modelNetwork.updateInformationByAddressId(Common.CURRENT_ADDRESS_ID, Common.UPDATE_ALL_WIDGET);
                         //Toast.makeText(mContext, R.string.gps_network_enabled, Toast.LENGTH_SHORT).show();
-                    } else {
-                        //dialogLocation = buildDialogLocation(mContext).show();
-                        //Toast.makeText(mContext, R.string.gps_network_not_enabled, Toast.LENGTH_SHORT).show();
+                        if (dialogLocation != null) dialogLocation.dismiss();
                     }
 
                 }

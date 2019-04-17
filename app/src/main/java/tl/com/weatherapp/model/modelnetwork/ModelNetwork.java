@@ -342,7 +342,7 @@ public class ModelNetwork {
                 int wgAddressId = sharedPreferences.getInt(Common.SHARE_PREF_WIDGET_ADDRESS_ID_KEY_AT + id, -1);
                 if (weatherResult != null && wgAddressId != -1 && wgAddressId == addressID) {
 
-                    String tempUnit = defSharedPreferences.getString(mContext.getString(R.string.pref_temp_unit), null);
+                    String tempUnit = defSharedPreferences.getString(mContext.getString(R.string.pref_temp_unit), mContext.getString(R.string.pref_temp_default_value));
 
                     String temp = null;
                     if (tempUnit.equals(mContext.getString(R.string.pref_temp_default_value))) {
@@ -363,7 +363,6 @@ public class ModelNetwork {
 
                     Intent intent = new Intent(mContext, MainActivity.class);
                     intent.putExtra(Common.INTENT_ADDRESS_ID, addressID);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_TASK_ON_HOME);
                     PendingIntent pendingIntent = PendingIntent.getActivity(mContext, id, intent, 0);
                     views.setOnClickPendingIntent(R.id.linear_layout, pendingIntent);
                     appWidgetManager.updateAppWidget(id, views);
@@ -371,7 +370,7 @@ public class ModelNetwork {
             }
         } else if (appWidgetId != Common.NO_UPDATE_WIDGET) {
             if (weatherResult != null) {
-                String tempUnit = defSharedPreferences.getString(mContext.getString(R.string.pref_temp_unit), null);
+                String tempUnit = defSharedPreferences.getString(mContext.getString(R.string.pref_temp_unit), mContext.getString(R.string.pref_temp_default_value));
 
                 String temp = null;
                 if (tempUnit.equals(mContext.getString(R.string.pref_temp_default_value))) {
@@ -624,10 +623,10 @@ public class ModelNetwork {
             try {
                 List<Address> addresses = geocoder.getFromLocation(lat, lng, 1);
                 if (addresses.size() > 0) {
-                    if (addresses.get(0).getLocality() == null) {
+                    if (addresses.get(0).getSubAdminArea() == null) {
                         return "unknown";
                     }
-                    return addresses.get(0).getLocality();
+                    return addresses.get(0).getSubAdminArea();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
