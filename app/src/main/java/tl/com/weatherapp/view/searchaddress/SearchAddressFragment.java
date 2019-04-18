@@ -45,6 +45,7 @@ public class FindAddressFragment extends BaseFragment implements PlaceSelectionL
         autocompleteFragment =
                 (PlaceAutocompleteFragment) getActivity().getFragmentManager().findFragmentById(
                         R.id.place_autocomplete_fragment);
+        autocompleteFragment.
         autocompleteFragment.setOnPlaceSelectedListener(this);
     }
 
