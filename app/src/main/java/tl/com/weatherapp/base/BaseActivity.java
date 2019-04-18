@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import java.util.List;
 
 import tl.com.weatherapp.R;
+import tl.com.weatherapp.view.weatherdetail.WeatherDetailFragment;
+import tl.com.weatherapp.view.weatherhome.WeatherHomeFragment;
 
 public class BaseActivity extends AppCompatActivity {
 

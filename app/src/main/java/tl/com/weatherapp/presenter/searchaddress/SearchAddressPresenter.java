@@ -1,14 +1,13 @@
-package tl.com.weatherapp.presenter.findaddress;
+package tl.com.weatherapp.presenter.searchaddress;
 
 import com.google.android.gms.location.places.Place;
 
 import tl.com.weatherapp.model.modelnetwork.ModelNetwork;
-import tl.com.weatherapp.view.findaddress.IFindAddressView;
 
-public class FindAddressPresenter {
+public class SearchAddressPresenter {
     private ModelNetwork modelNetwork;
 
-    public FindAddressPresenter() {
+    public SearchAddressPresenter() {
         modelNetwork = ModelNetwork.getInstance();
     }
 

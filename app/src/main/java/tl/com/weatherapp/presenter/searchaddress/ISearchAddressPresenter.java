@@ -1,4 +1,4 @@
-package tl.com.weatherapp.presenter.findaddress;
+package tl.com.weatherapp.presenter.searchaddress;
 
-public interface IFindAddressPresenter {
+public interface ISearchAddressPresenter {
 }

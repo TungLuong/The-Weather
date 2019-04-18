@@ -21,15 +21,13 @@ import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
-import com.victor.loading.book.BookLoading;
-import com.victor.loading.newton.NewtonCradleLoading;
 
 import java.util.List;
 import java.util.Locale;
 
 import tl.com.weatherapp.R;
 import tl.com.weatherapp.common.Common;
-import tl.com.weatherapp.view.findaddress.FindAddressFragment;
+import tl.com.weatherapp.view.searchaddress.SearchAddressFragment;
 import tl.com.weatherapp.view.weatheraddress.WeatherAddressFragment;
 import tl.com.weatherapp.view.weatherhome.WeatherHomeFragment;
 import tl.com.weatherapp.base.BaseActivity;
@@ -124,49 +122,33 @@ public class MainActivity extends BaseActivity implements IMainView {
     public void openWeatherHomeFragment() {
         WeatherHomeFragment fragment = new WeatherHomeFragment();
         android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(R.anim.fade_in,R.anim.fade_out);
+        transaction.setCustomAnimations(R.anim.fade_in,R.anim.translate_form_top_to_botton);
         transaction.replace(R.id.frame_layout, fragment);
-        //transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
         transaction.commitAllowingStateLoss();
+        transaction.disallowAddToBackStack();
+       //transaction.addToBackStack(null);
         loadingView.setVisibility(View.GONE);
     }
 
     public void openWeatherAddressFragment() {
         WeatherAddressFragment fragment = new WeatherAddressFragment();
         android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(R.anim.fade_in,R.anim.fade_out);
+        transaction.setCustomAnimations(R.anim.translate_form_botton_to_top,R.anim.fade_out,R.anim.fade_in,R.anim.translate_form_top_to_botton);
         transaction.replace(R.id.frame_layout, fragment);
+        //transaction.addToBackStack(null);
         transaction.commitAllowingStateLoss();
     }
 
-    public void openFindAddressFragment() {
-        FindAddressFragment fragment = new FindAddressFragment();
+    public void openSearchAddressFragment() {
+        SearchAddressFragment fragment = new SearchAddressFragment();
         android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(R.anim.fade_in,R.anim.fade_out);
+        transaction.setCustomAnimations(R.anim.fade_in,R.anim.fade_out,R.anim.fade_in,R.anim.fade_out);
         transaction.replace(R.id.frame_layout, fragment);
+        transaction.addToBackStack(null);
         transaction.commitAllowingStateLoss();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-//
     @Override
     protected void onDestroy() {
         super.onDestroy();

@@ -77,8 +77,8 @@ public class ItemWeatherAddressAdapter extends RecyclerSwipeAdapter<ItemWeatherA
         holder.background.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                iListenerWeatherAddressAdapter.openWeatherHomeFragment();
                 ModelNetwork.getInstance().setCurrentPager(holder.getAdapterPosition());
+                iListenerWeatherAddressAdapter.openWeatherHomeFragment();
             }
         });
         String icon_name = weatherResultList.get(position).getCurrently().getIcon().replace('-', '_')+"_compact";

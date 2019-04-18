@@ -74,7 +74,7 @@ public class ModelNetwork {
     private static IMainPresenter iMainPresenter;
     private static IWeatherHomePresenter iWeatherHomePresenter;
     private static IWeatherAddressPresenter iWeatherAddressPresenter;
-    //  private IFindAddressPresenter iFindAddressPresenter;
+    //  private ISearchAddressPresenter iFindAddressPresenter;
     private static Gson gson;
 
     private AsyncTask<String, Void, Void> asyncGetWeatherResult;

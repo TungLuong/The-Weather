@@ -3,7 +3,7 @@
 
     <string name="quit_tiltle" translatable="true">Quit</string>
     <string name="quit_message" translatable="true">Do you really want to quit?</string>
-    <string name="back_text" translatable="true">Back</string>
+    <string name="back_text" translatable="true">Cancel</string>
 
     <string name="setting" translatable="true">Setting</string>
     <string name="appwidget_text" translatable="false">EXAMPLE</string>

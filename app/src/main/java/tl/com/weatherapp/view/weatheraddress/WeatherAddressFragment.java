@@ -15,6 +15,7 @@ import java.util.List;
 import tl.com.weatherapp.IListenerWeatherAddressAdapter;
 import tl.com.weatherapp.R;
 import tl.com.weatherapp.adapter.ItemWeatherAddressAdapter;
+import tl.com.weatherapp.base.BaseActivity;
 import tl.com.weatherapp.base.BaseFragment;
 import tl.com.weatherapp.model.weather.WeatherResult;
 import tl.com.weatherapp.presenter.weatheraddress.WeatherAddressPresenter;
@@ -53,7 +54,7 @@ public class WeatherAddressFragment extends BaseFragment implements IWeatherAddr
         btnAddAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity) getActivity()).openFindAddressFragment();
+                ((MainActivity) getActivity()).openSearchAddressFragment();
             }
         });
 
@@ -104,6 +105,7 @@ public class WeatherAddressFragment extends BaseFragment implements IWeatherAddr
 
     @Override
     public void openWeatherHomeFragment() {
+//        ((BaseActivity) getActivity()).onBackRoot();
         ((MainActivity) getActivity()).openWeatherHomeFragment();
     }
 
