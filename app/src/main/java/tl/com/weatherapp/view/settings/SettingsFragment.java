@@ -1,5 +1,6 @@
 package tl.com.weatherapp.view.settings;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import java.util.Arrays;
 
 import tl.com.weatherapp.R;
+import tl.com.weatherapp.view.main.MainActivity;
 
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
     @Override
@@ -66,7 +68,9 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                 }
             }
 
-            NavUtils.navigateUpFromSameTask(getActivity());
+            Intent intent = new Intent(getActivity(), MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
         }
         else{
             Preference preference = findPreference(key);

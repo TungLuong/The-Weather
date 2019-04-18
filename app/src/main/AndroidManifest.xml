@@ -34,7 +34,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.main.MainActivity"
-            android:launchMode="singleInstance">
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

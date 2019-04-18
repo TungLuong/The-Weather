@@ -178,9 +178,12 @@ public class ModelNetwork {
                         String strWeatherResult = sharedPreferences.getString(Common.SHARE_PREF_WEATHER_KEY_AT + addressId, "");
                         WeatherResult weatherResult = gson.fromJson(strWeatherResult, WeatherResult.class);
                         weatherResultList.set(position, weatherResult);
-                        if (onDataReady()) {
-                            //isMainActivityReceiver = true;
+                        if (!isMainActivityReceiver && onDataReady()) {
+                            isMainActivityReceiver = true;
                             iMainPresenter.loadDataFinish();
+                        }
+                        if (iWeatherAddressPresenter != null) {
+                            iWeatherAddressPresenter.notifyItemChange(position);
                         }
                     }
                 }));
@@ -314,9 +317,12 @@ public class ModelNetwork {
                         String strAirQuality = sharedPreferences.getString(Common.SHARE_PREF_AIR_QUALITY_KEY_AT + addressID, "");
                         AirQuality airQuality = gson.fromJson(strAirQuality, AirQuality.class);
                         airQualityList.set(position, airQuality);
-                        if (onDataReady()) {
-                            //isMainActivityReceiver = true;
+                        if (!isMainActivityReceiver && onDataReady()) {
+                            isMainActivityReceiver = true;
                             iMainPresenter.loadDataFinish();
+                        }
+                        if (iWeatherAddressPresenter != null) {
+                            iWeatherAddressPresenter.notifyItemChange(position);
                         }
                     }
                 }));
