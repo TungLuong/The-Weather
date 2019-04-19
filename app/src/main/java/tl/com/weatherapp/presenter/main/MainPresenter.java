@@ -28,6 +28,7 @@ public class MainPresenter implements IMainPresenter {
     public MainPresenter(Context mContext) {
         this.mContext = mContext;
         modelNetwork = ModelNetwork.getInstance();
+        modelNetwork.create(mContext);
         modelNetwork.setiMainPresenter(this);
     }
 
@@ -63,7 +64,7 @@ public class MainPresenter implements IMainPresenter {
                         }
                     }
 
-                    modelNetwork.create(mContext);
+                   // modelNetwork.create(mContext);
                     modelNetwork.loadDataForMainPresenter();
 
 

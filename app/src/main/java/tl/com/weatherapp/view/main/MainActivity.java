@@ -10,6 +10,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -60,6 +61,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         if (extras != null) {
             int addressId = extras.getInt(Common.INTENT_ADDRESS_ID);
             mainPresenter.setCurrentPagerByAddressId(addressId);
+            Log.d(MainActivity.class.getSimpleName(),"ADDRESS ID :"+ addressId);
         }
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         String language = sharedPreferences.getString(getString(R.string.pref_lang_key),getString(R.string.pref_lang_default_value));

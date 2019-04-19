@@ -17,6 +17,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
@@ -106,11 +107,10 @@ public class ModelNetwork {
         }
         sharedPreferences = mContext.getSharedPreferences(Common.DATA, MODE_PRIVATE);
         defSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+        totalAddress = sharedPreferences.getInt(Common.SHARE_PREF_TOTAL_ADDRESS_KEY, 1);
     }
 
     public void loadDataForMainPresenter() {
-        totalAddress = sharedPreferences.getInt(Common.SHARE_PREF_TOTAL_ADDRESS_KEY, 1);
-
         weatherResultList = new ArrayList<>();
         airQualityList = new ArrayList<>();
         for (int i = 0; i < totalAddress; i++) {
@@ -524,9 +524,15 @@ public class ModelNetwork {
 
     public void setCurrentPagerByAddressId(int addressId) {
         for (int position = 0; position < totalAddress; position++) {
-            if (sharedPreferences.getInt(Common.SHARE_PREF_ADDRESS_ID_KEY_AT + position, -1) == addressId)
+            int sfAdressId = sharedPreferences.getInt(Common.SHARE_PREF_ADDRESS_ID_KEY_AT + position, -1);
+            if (sfAdressId == addressId){
                 curPositionPager = position;
+                break;
+            }
+             Log.d(ModelNetwork.class.getSimpleName(),"ADDRESS ID "+sfAdressId+"  POSITION PAGER :"+ position);
+
         }
+      //  Log.d(ModelNetwork.class.getSimpleName(),"ADDRESS ID "+addressId+"  POSITION PAGER :"+ curPositionPager);
     }
 
     public void setCurrentPager(int positionPager) {
