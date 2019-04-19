@@ -280,8 +280,8 @@ public class MainPresenter implements IMainPresenter {
 
     }
 
-    public void setCurrentPagerByAddressId(int addressId) {
-        modelNetwork.setCurrentPagerByAddressId(addressId);
+    public void setCurrentPagerByAppWidgetId(int appWidgetId) {
+        modelNetwork.setCurrentPagerByAppWidgetId(appWidgetId);
     }
 
     public void setCurrentPager(int positionPager) {

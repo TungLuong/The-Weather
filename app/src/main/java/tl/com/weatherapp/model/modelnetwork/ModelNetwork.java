@@ -347,60 +347,46 @@ public class ModelNetwork {
             for (int id : appWidgetIds) {
                 int wgAddressId = sharedPreferences.getInt(Common.SHARE_PREF_WIDGET_ADDRESS_ID_KEY_AT + id, -1);
                 if (weatherResult != null && wgAddressId != -1 && wgAddressId == addressID) {
+                    updatAppWidget(weatherResult, views, id);
+                    appWidgetManager.updateAppWidget(appWidgetId, views);
 
-                    String tempUnit = defSharedPreferences.getString(mContext.getString(R.string.pref_temp_unit), mContext.getString(R.string.pref_temp_default_value));
-
-                    String temp = null;
-                    if (tempUnit.equals(mContext.getString(R.string.pref_temp_default_value))) {
-                        temp = Common.covertFtoC(weatherResult.getCurrently().getTemperature()) + "°";
-                    } else {
-                        temp = (int) weatherResult.getCurrently().getTemperature() + "°";
-                    }
-
-
-                    Picasso.get().load(new StringBuilder("https://darksky.net/images/weather-icons/")
-                            .append(weatherResult.getCurrently().getIcon())
-                            .append(".png").toString()).into(views, R.id.img_icon, new int[]{id});
-                    views.setTextViewText(R.id.tv_temp, temp);
-                    String lastTimeUpdate = mContext.getString(R.string.last_update) + ": " + Common.convertUnixToTime(weatherResult.getCurrently().getTime());
-                    views.setTextViewText(R.id.tv_time_update, lastTimeUpdate);
-                    String lastLocation = weatherResult.getAddress();
-                    views.setTextViewText(R.id.tv_location, lastLocation);
-
-                    Intent intent = new Intent(mContext, MainActivity.class);
-                    intent.putExtra(Common.INTENT_ADDRESS_ID, addressID);
-                    PendingIntent pendingIntent = PendingIntent.getActivity(mContext, id, intent, 0);
-                    views.setOnClickPendingIntent(R.id.linear_layout, pendingIntent);
-                    appWidgetManager.updateAppWidget(id, views);
                 }
             }
         } else if (appWidgetId != Common.NO_UPDATE_WIDGET) {
             if (weatherResult != null) {
-                String tempUnit = defSharedPreferences.getString(mContext.getString(R.string.pref_temp_unit), mContext.getString(R.string.pref_temp_default_value));
-
-                String temp = null;
-                if (tempUnit.equals(mContext.getString(R.string.pref_temp_default_value))) {
-                    temp = Common.covertFtoC(weatherResult.getCurrently().getTemperature()) + "°";
-                } else {
-                    temp = (int) weatherResult.getCurrently().getTemperature() + "°";
-                }
-                Picasso.get().load(new StringBuilder("https://darksky.net/images/weather-icons/")
-                        .append(weatherResult.getCurrently().getIcon())
-                        .append(".png").toString()).into(views, R.id.img_icon, new int[]{appWidgetId});
-                views.setTextViewText(R.id.tv_temp, temp);
-                String lastTimeUpdate = mContext.getString(R.string.last_update) + ": " + Common.convertUnixToTime(weatherResult.getCurrently().getTime());
-                views.setTextViewText(R.id.tv_time_update, lastTimeUpdate);
-                String lastLocation = weatherResult.getAddress();
-                views.setTextViewText(R.id.tv_location, lastLocation);
-
-                Intent intent = new Intent(mContext, MainActivity.class);
-                intent.putExtra(Common.INTENT_ADDRESS_ID, addressID);
-                PendingIntent pendingIntent = PendingIntent.getActivity(mContext, appWidgetId, intent, 0);
-                views.setOnClickPendingIntent(R.id.linear_layout, pendingIntent);
+                updatAppWidget(weatherResult, views, appWidgetId);
                 appWidgetManager.updateAppWidget(appWidgetId, views);
             }
         }
 
+    }
+
+    private static void updatAppWidget(WeatherResult weatherResult, RemoteViews views, int appWidgetId) {
+        String tempUnit = defSharedPreferences.getString(mContext.getString(R.string.pref_temp_unit), mContext.getString(R.string.pref_temp_default_value));
+        String temp = null;
+        if (tempUnit.equals(mContext.getString(R.string.pref_temp_default_value))) {
+            temp = Common.covertFtoC(weatherResult.getCurrently().getTemperature()) + "°";
+        } else {
+            temp = (int) weatherResult.getCurrently().getTemperature() + "°";
+        }
+
+
+        Picasso.get().load(new StringBuilder("https://darksky.net/images/weather-icons/")
+                .append(weatherResult.getCurrently().getIcon())
+                .append(".png").toString()).into(views, R.id.img_icon, new int[]{appWidgetId});
+        views.setTextViewText(R.id.tv_temp, temp);
+        String lastTimeUpdate = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            lastTimeUpdate = mContext.getString(R.string.last_update) + ": " + Common.convertUnixToTime(weatherResult.getCurrently().getTime());
+        }
+        views.setTextViewText(R.id.tv_time_update, lastTimeUpdate);
+        String lastLocation = weatherResult.getAddress();
+        views.setTextViewText(R.id.tv_location, lastLocation);
+
+        Intent intent = new Intent(mContext, MainActivity.class);
+        intent.putExtra(Common.INTENT_APP_WIDGET_ID, appWidgetId);
+        PendingIntent pendingIntent = PendingIntent.getActivity(mContext, appWidgetId, intent, 0);
+        views.setOnClickPendingIntent(R.id.linear_layout, pendingIntent);
     }
 
     public void updateWidgetAndInformation(int appWidgetId) {
@@ -426,7 +412,7 @@ public class ModelNetwork {
 
 
     public void getResultWeatherForWeatherHomePresenter() {
-        iWeatherHomePresenter.getResultList(weatherResultList,airQualityList);
+        iWeatherHomePresenter.getResultList(weatherResultList, airQualityList);
         iWeatherHomePresenter.setCurrPositionPagerForView(curPositionPager);
     }
 
@@ -443,8 +429,8 @@ public class ModelNetwork {
         editor.remove(Common.SHARE_PREF_LAT_KEY_AT + addressId);
         editor.remove(Common.SHARE_PREF_LAT_KEY_AT + addressId);
         editor.remove(Common.SHARE_PREF_ADDRESS_NAME_KEY_AT + addressId);
-        editor.remove(Common.SHARE_PREF_WEATHER_KEY_AT+addressId);
-        editor.remove(Common.SHARE_PREF_AIR_QUALITY_KEY_AT +addressId);
+        editor.remove(Common.SHARE_PREF_WEATHER_KEY_AT + addressId);
+        editor.remove(Common.SHARE_PREF_AIR_QUALITY_KEY_AT + addressId);
         editor.remove(Common.SHARE_PREF_ADDRESS_ID_KEY_AT + position);
 
         for (int i = position; i < weatherResultList.size() - 1; i++) {
@@ -474,7 +460,7 @@ public class ModelNetwork {
         WeatherResult weatherResult = weatherResultList.remove(oldPo);
         weatherResultList.add(newPo, weatherResult);
         AirQuality airQuality = airQualityList.remove(oldPo);
-        airQualityList.add(newPo,airQuality);
+        airQualityList.add(newPo, airQuality);
 
         SharedPreferences sharedPreferences = mContext.getSharedPreferences(Common.DATA, MODE_PRIVATE);
         int addressId = sharedPreferences.getInt(Common.SHARE_PREF_ADDRESS_ID_KEY_AT + oldPo, -1);
@@ -519,20 +505,22 @@ public class ModelNetwork {
         weatherResultList.add(null);
         airQualityList.add(null);
         updateWeatherInformation(lat, lng, newId, addressName, NO_UPDATE_WIDGET);
-        updateAirQualityIndex(lat,lng,newId);
+        updateAirQualityIndex(lat, lng, newId);
     }
 
-    public void setCurrentPagerByAddressId(int addressId) {
+    public void setCurrentPagerByAppWidgetId(int appWidgetId) {
+        int addressId = sharedPreferences.getInt(Common.SHARE_PREF_WIDGET_ADDRESS_ID_KEY_AT + appWidgetId, -1);
         for (int position = 0; position < totalAddress; position++) {
             int sfAdressId = sharedPreferences.getInt(Common.SHARE_PREF_ADDRESS_ID_KEY_AT + position, -1);
-            if (sfAdressId == addressId){
+
+            if (sfAdressId == addressId) {
                 curPositionPager = position;
                 break;
             }
-             Log.d(ModelNetwork.class.getSimpleName(),"ADDRESS ID "+sfAdressId+"  POSITION PAGER :"+ position);
+            Log.d(ModelNetwork.class.getSimpleName(), "ADDRESS ID " + sfAdressId + "  POSITION PAGER :" + position);
 
         }
-      //  Log.d(ModelNetwork.class.getSimpleName(),"ADDRESS ID "+addressId+"  POSITION PAGER :"+ curPositionPager);
+        //  Log.d(ModelNetwork.class.getSimpleName(),"ADDRESS ID "+addressId+"  POSITION PAGER :"+ curPositionPager);
     }
 
     public void setCurrentPager(int positionPager) {
@@ -620,7 +608,7 @@ public class ModelNetwork {
                                 cAddress = sharedPreferences.getString(Common.SHARE_PREF_ADDRESS_NAME_KEY_AT + CURRENT_ADDRESS_ID, "unknown");
                             }
                             updateWeatherInformation(cLat, cLng, CURRENT_ADDRESS_ID, cAddress, appWidgetId);
-                            updateAirQualityIndex(cLat,cLng,CURRENT_ADDRESS_ID);
+                            updateAirQualityIndex(cLat, cLng, CURRENT_ADDRESS_ID);
                         } else {
                         }
                     }
