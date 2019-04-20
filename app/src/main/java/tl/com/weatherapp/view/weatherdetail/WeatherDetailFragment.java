@@ -172,7 +172,7 @@ public class WeatherDetailFragment extends Fragment implements View.OnScrollChan
             @Override
             public void onRefresh() {
                 refreshLayout.setRefreshing(true);
-                presenter.updateInformationByPosition(countAddress);
+                presenter.updateInformationInPosition(countAddress);
 //                ((MainActivity) getActivity()).getIsReceiver().set(countAddress, false);
 //                ((MainActivity) getActivity()).sendRequestGetWeatherInfo(countAddress);
 

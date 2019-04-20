@@ -75,11 +75,7 @@ public class ModelNetwork {
     private static IMainPresenter iMainPresenter;
     private static IWeatherHomePresenter iWeatherHomePresenter;
     private static IWeatherAddressPresenter iWeatherAddressPresenter;
-    //  private ISearchAddressPresenter iFindAddressPresenter;
     private static Gson gson;
-
-    private AsyncTask<String, Void, Void> asyncGetWeatherResult;
-//    private Executor executor;
 
     public static ModelNetwork getInstance() {
         return instance;
@@ -134,134 +130,75 @@ public class ModelNetwork {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<WeatherResult>() {
 
-                    @RequiresApi(api = Build.VERSION_CODES.N)
                     @Override
                     public void accept(WeatherResult weatherResult) throws Exception {
                         weatherResult.setAddress(address);
                         try {
-                            int position = 0;
-                            for (int i = 0; i < totalAddress; i++) {
-                                if (sharedPreferences.getInt(SHARE_PREF_ADDRESS_ID_KEY_AT + i, -1) == addressId) {
-                                    position = i;
-                                    break;
-                                }
+                            int position = getPagerPositionByAddressId(addressId);
+                            saveWeatherDataByAddressId(weatherResult, addressId);
+                            if (weatherResultList.size() > 0) {
+                                weatherResultList.set(position, weatherResult);
                             }
-                            String strWeatherResult = gson.toJson(weatherResult);
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString(Common.SHARE_PREF_WEATHER_KEY_AT + addressId, strWeatherResult);
-                            editor.commit();
-                            weatherResultList.set(position, weatherResult);
-                            if (!isMainActivityReceiver && onDataReady()) {
-                                isMainActivityReceiver = true;
-                                iMainPresenter.loadDataFinish();
-                            }
-                            if (iWeatherAddressPresenter != null) {
-                                iWeatherAddressPresenter.notifyItemChange(position);
-                            }
+                            checkLoadDataFinish();
+                            checkNotifiWeatherAddress(position);
                         } catch (Exception e) {
                             Toast.makeText(mContext, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
-                        ;
-                        updateWeatherWidget(weatherResult, addressId, appWidgetId);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            updateWeatherWidget(weatherResult, addressId, appWidgetId);
+                        }
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        int position = 0;
-                        for (int i = 0; i < totalAddress; i++) {
-                            if (sharedPreferences.getInt(SHARE_PREF_ADDRESS_ID_KEY_AT + i, -1) == addressId) {
-                                position = i;
-                                break;
-                            }
-                        }
+                        int position = getPagerPositionByAddressId(addressId);
 
-                        String strWeatherResult = sharedPreferences.getString(Common.SHARE_PREF_WEATHER_KEY_AT + addressId, "");
-                        WeatherResult weatherResult = gson.fromJson(strWeatherResult, WeatherResult.class);
-                        weatherResultList.set(position, weatherResult);
-                        if (!isMainActivityReceiver && onDataReady()) {
-                            isMainActivityReceiver = true;
-                            iMainPresenter.loadDataFinish();
+                        WeatherResult weatherResult = getWeatherDataByAddressId(addressId);
+                        if (weatherResultList.size() > 0) {
+                            weatherResultList.set(position, weatherResult);
                         }
-                        if (iWeatherAddressPresenter != null) {
-                            iWeatherAddressPresenter.notifyItemChange(position);
+                        checkLoadDataFinish();
+                        checkNotifiWeatherAddress(position);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            updateWeatherWidget(weatherResult, addressId, appWidgetId);
                         }
                     }
                 }));
 
-//        asyncGetWeatherResult = new AsyncTask<String, Void, Void>() {
-//            @Override
-//            protected Void doInBackground(String... strings) {
-//                StringBuffer content = new StringBuffer();
-//                try {
-//                    URL url = new URL(strings[0]);
-//                    InputStreamReader inputStreamReader = new InputStreamReader(url.openConnection().getInputStream());
-//                    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-//                    String line = "";
-//                    while ((line = bufferedReader.readLine()) != null) {
-//                        content.append(line);
-//                    }
-//                    bufferedReader.close();
-//                } catch (MalformedURLException e) {
-//                    e.printStackTrace();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                String s = content.toString();
-//                int position = 0;
-//                Toast.makeText(mContext, "Toast : " + s.toString(), Toast.LENGTH_SHORT);
-//                if (s.equals("")) {
-//                    WeatherResult weatherResult = gson.fromJson(s, WeatherResult.class);
-//                    weatherResult.setAddress(address);
-//                    try {
-//                        for (int i = 0; i < totalAddress; i++) {
-//                            if (sharedPreferences.getInt(SHARE_PREF_ADDRESS_ID_KEY_AT + i, -1) == addressId) {
-//                                position = i;
-//                                break;
-//                            }
-//                        }
-//                        String strWeatherResult = gson.toJson(weatherResult);
-//                        SharedPreferences.Editor editor = sharedPreferences.edit();
-//                        editor.putString(Common.SHARE_PREF_WEATHER_KEY_AT + addressId, strWeatherResult);
-//                        editor.commit();
-//                        weatherResultList.set(position, weatherResult);
-//                        if (!isMainActivityReceiver && position == curPositionPager) {
-//                            isMainActivityReceiver = true;
-//                            iMainPresenter.loadDataFinish();
-//                        }
-//                        if (iWeatherAddressPresenter != null) {
-//                            iWeatherAddressPresenter.notifyItemChange(position);
-//                        }
-//                    } catch (Exception e) {
-//                        Toast.makeText(mContext, e.getMessage(), Toast.LENGTH_SHORT).show();
-//                    }
-//                    ;
-//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//                        updateWeatherWidget(weatherResult, addressId, appWidgetId);
-//                    }
-//                } else {
-//                    for (int i = 0; i < totalAddress; i++) {
-//                        if (sharedPreferences.getInt(SHARE_PREF_ADDRESS_ID_KEY_AT + i, -1) == addressId) {
-//                            position = i;
-//                            break;
-//                        }
-//                    }
-//                    String strWeatherResult = sharedPreferences.getString(Common.SHARE_PREF_WEATHER_KEY_AT + addressId, "");
-//                    WeatherResult weatherResult = gson.fromJson(strWeatherResult, WeatherResult.class);
-//                    weatherResultList.set(position, weatherResult);
-//                    if (position == curPositionPager) {
-//                        //isMainActivityReceiver = true;
-//                        iMainPresenter.loadDataFinish();
-//                    }
-//                }
-//                return null;
-//            }
-//        };
-//
-//        StringBuilder link = new StringBuilder("https://api.darksky.net/").append("forecast").append("/").append(Common.WEATHER_API_KEY).append("/").append(lat).append(",").append(lng);
-//        asyncGetWeatherResult.execute(link.toString());
+    }
 
+    private WeatherResult getWeatherDataByAddressId(int addressId) {
+        String strWeatherResult = sharedPreferences.getString(Common.SHARE_PREF_WEATHER_KEY_AT + addressId, "");
+        return gson.fromJson(strWeatherResult, WeatherResult.class);
+    }
 
+    private void checkNotifiWeatherAddress(int position) {
+        if (iWeatherAddressPresenter != null) {
+            iWeatherAddressPresenter.notifyItemChange(position);
+        }
+    }
+
+    private void checkLoadDataFinish() {
+        if (!isMainActivityReceiver && onDataReady()) {
+            isMainActivityReceiver = true;
+            iMainPresenter.loadDataFinish();
+        }
+    }
+
+    private void saveWeatherDataByAddressId(WeatherResult weatherResult, int addressId) {
+        String strWeatherResult = gson.toJson(weatherResult);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(Common.SHARE_PREF_WEATHER_KEY_AT + addressId, strWeatherResult);
+        editor.commit();
+    }
+
+    private int getPagerPositionByAddressId(int addressId) {
+        for (int position = 0; position < totalAddress; position++) {
+            if (sharedPreferences.getInt(SHARE_PREF_ADDRESS_ID_KEY_AT + position, -1) == addressId) {
+                return position;
+            }
+        }
+        return 0;
     }
 
     private void updateAirQualityIndex(final float lat, final float lng, final int addressID) {
@@ -280,25 +217,13 @@ public class ModelNetwork {
                     @Override
                     public void accept(AirQuality airQuality) throws Exception {
                         try {
-                            int position = 0;
-                            for (int i = 0; i < totalAddress; i++) {
-                                if (sharedPreferences.getInt(SHARE_PREF_ADDRESS_ID_KEY_AT + i, -1) == addressID) {
-                                    position = i;
-                                    break;
-                                }
+                            int position = getPagerPositionByAddressId(addressID);
+                            saveAirQualityDataByAddressId(airQuality, addressID);
+                            if (airQualityList.size() > 0) {
+                                airQualityList.set(position, airQuality);
                             }
-                            String strAirQuality = gson.toJson(airQuality);
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString(Common.SHARE_PREF_AIR_QUALITY_KEY_AT + addressID, strAirQuality);
-                            editor.commit();
-                            airQualityList.set(position, airQuality);
-                            if (!isMainActivityReceiver && onDataReady()) {
-                                isMainActivityReceiver = true;
-                                iMainPresenter.loadDataFinish();
-                            }
-                            if (iWeatherAddressPresenter != null) {
-                                iWeatherAddressPresenter.notifyItemChange(position);
-                            }
+                            checkLoadDataFinish();
+                            checkNotifiWeatherAddress(position);
                         } catch (Exception e) {
                             Toast.makeText(mContext, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
@@ -306,26 +231,26 @@ public class ModelNetwork {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        int position = 0;
-                        for (int i = 0; i < totalAddress; i++) {
-                            if (sharedPreferences.getInt(SHARE_PREF_ADDRESS_ID_KEY_AT + i, -1) == addressID) {
-                                position = i;
-                                break;
-                            }
-                        }
+                        int position = getPagerPositionByAddressId(addressID);
 
-                        String strAirQuality = sharedPreferences.getString(Common.SHARE_PREF_AIR_QUALITY_KEY_AT + addressID, "");
-                        AirQuality airQuality = gson.fromJson(strAirQuality, AirQuality.class);
-                        airQualityList.set(position, airQuality);
-                        if (!isMainActivityReceiver && onDataReady()) {
-                            isMainActivityReceiver = true;
-                            iMainPresenter.loadDataFinish();
-                        }
-                        if (iWeatherAddressPresenter != null) {
-                            iWeatherAddressPresenter.notifyItemChange(position);
-                        }
+                        if (airQualityList.size() > 0)
+                            airQualityList.set(position, getAirQuailityDataByAddressId(addressID));
+                        checkLoadDataFinish();
+                        checkNotifiWeatherAddress(position);
                     }
                 }));
+    }
+
+    private AirQuality getAirQuailityDataByAddressId(int addressID) {
+        String strAirQuality = sharedPreferences.getString(Common.SHARE_PREF_AIR_QUALITY_KEY_AT + addressID, "");
+        return gson.fromJson(strAirQuality, AirQuality.class);
+    }
+
+    private void saveAirQualityDataByAddressId(AirQuality airQuality, int addressID) {
+        String strAirQuality = gson.toJson(airQuality);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(Common.SHARE_PREF_AIR_QUALITY_KEY_AT + addressID, strAirQuality);
+        editor.commit();
     }
 
     private boolean onDataReady() {
@@ -348,7 +273,7 @@ public class ModelNetwork {
                 int wgAddressId = sharedPreferences.getInt(Common.SHARE_PREF_WIDGET_ADDRESS_ID_KEY_AT + id, -1);
                 if (weatherResult != null && wgAddressId != -1 && wgAddressId == addressID) {
                     updatAppWidget(weatherResult, views, id);
-                    appWidgetManager.updateAppWidget(appWidgetId, views);
+                    appWidgetManager.updateAppWidget(id, views);
 
                 }
             }
@@ -487,17 +412,14 @@ public class ModelNetwork {
 
         int maxId = sharedPreferences.getInt(Common.SHARE_PREF_MAX_ID_KEY, 0);
         int newId = maxId + 1;
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(Common.SHARE_PREF_ADDRESS_ID_KEY_AT + totalAddress, newId);
 
         Float lat = (float) latLng.latitude;
         Float lng = (float) latLng.longitude;
         String addressName = String.valueOf(place.getName());
-        editor.putFloat(Common.SHARE_PREF_LAT_KEY_AT + newId, lat);
-        editor.putFloat(Common.SHARE_PREF_LNG_KEY_AT + newId, lng);
-        editor.putString(Common.SHARE_PREF_ADDRESS_NAME_KEY_AT + newId, addressName);
+        saveAddressInfoData(totalAddress,newId,lat,lng,addressName);
 
         totalAddress++;
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(Common.SHARE_PREF_TOTAL_ADDRESS_KEY, totalAddress);
         editor.putInt(Common.SHARE_PREF_MAX_ID_KEY, newId);
         editor.commit();
@@ -539,41 +461,6 @@ public class ModelNetwork {
 
     class MyLocation {
         private FusedLocationProviderClient mFusedLocationProviderClient;
-        private LocationCallback locationCallback;
-        private LocationRequest locationRequest;
-
-
-//        public void getLocation(Context mContext){
-//            buildLocationRequest();
-//            buildLocationCallBack();
-//            fusedLocationProviderClient = new FusedLocationProviderClient(mContext);
-//            if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-//                    && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//                return ;
-//            }
-//            fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
-//        }
-//
-//        private void buildLocationCallBack() {
-//            locationCallback = new LocationCallback(){
-//                @Override
-//                public void onLocationResult(LocationResult locationResult) {
-//                    super.onLocationResult(locationResult);
-//                    Location location = locationResult.getLastLocation();
-//                    updateWeatherInformation((float) location.getLatitude(),(float) location.getLongitude(),Common.CURRENT_ADDRESS_ID);
-//                }
-//            };
-//
-//        }
-//
-//        private void buildLocationRequest() {
-//            locationRequest = new LocationRequest();
-//            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-//            locationRequest.setInterval(5000);
-//            locationRequest.setFastestInterval(3000);
-//            locationRequest.setSmallestDisplacement(10.0f);
-//
-//        }
 
         private void updateWeatherAndAirQualityDeviceLocation(int appWidgetId) {
             mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(mContext);
@@ -596,12 +483,8 @@ public class ModelNetwork {
                                 cLat = (float) curLocation.getLatitude();
                                 cLng = (float) curLocation.getLongitude();
                                 cAddress = getAddress(cLat, cLng);
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.putInt(SHARE_PREF_ADDRESS_ID_KEY_AT + 0, CURRENT_ADDRESS_ID);
-                                editor.putFloat(Common.SHARE_PREF_LAT_KEY_AT + CURRENT_ADDRESS_ID, cLat);
-                                editor.putFloat(Common.SHARE_PREF_LNG_KEY_AT + CURRENT_ADDRESS_ID, cLng);
-                                editor.putString(Common.SHARE_PREF_ADDRESS_NAME_KEY_AT + CURRENT_ADDRESS_ID, cAddress);
-                                editor.commit();
+
+                                saveAddressInfoData(0,CURRENT_ADDRESS_ID,cLat,cLng,cAddress);
                             } else {
                                 cLat = sharedPreferences.getFloat(Common.SHARE_PREF_LAT_KEY_AT + CURRENT_ADDRESS_ID, 0f);
                                 cLng = sharedPreferences.getFloat(Common.SHARE_PREF_LNG_KEY_AT + CURRENT_ADDRESS_ID, 0f);
@@ -634,6 +517,15 @@ public class ModelNetwork {
             return "unknown";
         }
 
+    }
+
+    private void saveAddressInfoData(int position, int addressId, float cLat, float cLng, String cAddress) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(SHARE_PREF_ADDRESS_ID_KEY_AT + position, addressId);
+        editor.putFloat(Common.SHARE_PREF_LAT_KEY_AT + addressId, cLat);
+        editor.putFloat(Common.SHARE_PREF_LNG_KEY_AT + addressId, cLng);
+        editor.putString(Common.SHARE_PREF_ADDRESS_NAME_KEY_AT + addressId, cAddress);
+        editor.commit();
     }
 
 }

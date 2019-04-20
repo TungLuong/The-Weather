@@ -9,7 +9,7 @@ public class WeatherDetailPresenter {
         modelNetwork = ModelNetwork.getInstance();
     }
 
-    public void updateInformationByPosition(int position){
+    public void updateInformationInPosition(int position){
         modelNetwork.updateInformationByPosition(position);
     }
 }
