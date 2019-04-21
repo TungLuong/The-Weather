@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
@@ -37,6 +39,7 @@ import tl.com.weatherapp.common.Common;
 import tl.com.weatherapp.model.airquality.AirQuality;
 import tl.com.weatherapp.model.weather.WeatherResult;
 import tl.com.weatherapp.presenter.weatherdetail.WeatherDetailPresenter;
+import tl.com.weatherapp.view.main.MainActivity;
 
 
 @TargetApi(Build.VERSION_CODES.M)
@@ -49,11 +52,11 @@ public class WeatherDetailFragment extends Fragment implements View.OnScrollChan
     private ImageView iconWeather;
     private TextView tvCityName, tvHumidity, tvPressure, tvTemperature, tvDateTime, tvWindSpeed, tvDescription, tvDewPoint, tvCloudCover, tvUVIndex, tvVisibility, tvOzone;
     private LinearLayout mLinerLayout1, mLinerLayout2, mLinerLayour3;
-    private RecyclerView rcvDaily, rcvHourly,rcvAttributeWeather;
+    private RecyclerView rcvDaily, rcvHourly, rcvAttributeWeather;
     private NestedScrollView scrollView1;
     private ScrollView scrollView2;
     private LinearLayout mLinearLayout4;
-    private  RelativeLayout space;
+    private RelativeLayout space;
     private LinearLayout weatherPanel;
     private ConstraintLayout mainDetailsLayout;
 
@@ -146,33 +149,19 @@ public class WeatherDetailFragment extends Fragment implements View.OnScrollChan
         mLinerLayout1 = view.findViewById(R.id.liner_layout_1);
         mLinerLayout2 = view.findViewById(R.id.liner_layout_2);
         mLinerLayour3 = view.findViewById(R.id.liner_layout_3);
-//        listView = findViewById(R.id.list_item);
-//        List<String> modelList = new ArrayList<>();
-//        for (int i = 0; i < 5; i++) {
-//            modelList.add("List item " + i);
-//        }
-//
-//        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.item_view, modelList);
-//        listView.setAdapter(adapter);
         scrollView1 = view.findViewById(R.id.scrollView_1);
         scrollView1.setOverScrollMode(View.OVER_SCROLL_NEVER);
-//        //scrollView1.setVisibility(View.INVISIBLE);
-//        scrollView2 = view.findViewById(R.id.scrollView_2);
-//        mLinearLayout4 = view.findViewById(R.id.linear_layout_4);
-//        scrollView1.setOnScrollChangeListener(this);
-//
-//        scrollView2.setOnScrollChangeListener(this);
-//        space = view.findViewById(R.id.space);
-
-//        setHeightForRecycleViewAttributeWeather(inflater,container);
-
-//        setHeightForScrollView2();
         refreshLayout = view.findViewById(R.id.refresh_layout);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 refreshLayout.setRefreshing(true);
-                presenter.updateInformationInPosition(countAddress);
+                if (((MainActivity) getActivity()).isConnectedNetwork()) {
+                    presenter.updateInformationInPosition(countAddress);
+                } else {
+                    refreshLayout.setRefreshing(false);
+                    Toast.makeText(getContext(), getString(R.string.title_disconnect), Toast.LENGTH_SHORT).show();
+                }
 //                ((MainActivity) getActivity()).getIsReceiver().set(countAddress, false);
 //                ((MainActivity) getActivity()).sendRequestGetWeatherInfo(countAddress);
 
@@ -181,26 +170,7 @@ public class WeatherDetailFragment extends Fragment implements View.OnScrollChan
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             getWeatherInfo(weatherResult);
         }
-        refreshLayout.setRefreshing(false);
-       // scrollView();
         return view;
-    }
-
-    private void setHeightForRecycleViewAttributeWeather(LayoutInflater inflater, ViewGroup container) {
-        View itemView = inflater.inflate(R.layout.item_attribute_weather,container,false);
-        rcvAttributeWeather.getLayoutParams().height = Common.TOTAL_ATTRIBUTE_WEATHER*itemView.findViewById(R.id.item_view).getLayoutParams().height;
-    }
-
-    private void setHeightForScrollView2() {
-        Display display = getActivity().getWindowManager().getDefaultDisplay();
-        int height = display.getHeight();
-        int scrollViewHeight2 = 0;
-        scrollViewHeight2 = (int) (height  - mLinerLayout1.getLayoutParams().height - mLinerLayour3.getLayoutParams().height - 1.57*space.getLayoutParams().height);
-        scrollView2.getLayoutParams().height = scrollViewHeight2  ;
-    }
-
-    private void scrollView() {
-        scrollView1.smoothScrollBy(0,0);
     }
 
     @Override
@@ -230,7 +200,7 @@ public class WeatherDetailFragment extends Fragment implements View.OnScrollChan
         //set RecyclerView Hourly
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        ItemHourlyWeatherAdapter itemHourlyWeatherAdapter = new ItemHourlyWeatherAdapter(weatherResult,getActivity()
+        ItemHourlyWeatherAdapter itemHourlyWeatherAdapter = new ItemHourlyWeatherAdapter(weatherResult, getActivity()
         );
         rcvHourly.setLayoutManager(layoutManager);
         rcvHourly.setAdapter(itemHourlyWeatherAdapter);
@@ -238,7 +208,7 @@ public class WeatherDetailFragment extends Fragment implements View.OnScrollChan
         //set RecyclerView Daily
         LinearLayoutManager layoutManager2 = new LinearLayoutManager(getContext());
         layoutManager2.setOrientation(LinearLayoutManager.VERTICAL);
-        ItemDailyWeatherAdapter itemDailyWeatherAdapter = new ItemDailyWeatherAdapter(weatherResult,getActivity());
+        ItemDailyWeatherAdapter itemDailyWeatherAdapter = new ItemDailyWeatherAdapter(weatherResult, getActivity());
         rcvDaily.setLayoutManager(layoutManager2);
         rcvDaily.setAdapter(itemDailyWeatherAdapter);
         //rcvDaily.setNestedScrollingEnabled(false);
@@ -267,37 +237,33 @@ public class WeatherDetailFragment extends Fragment implements View.OnScrollChan
 //        rcvAttributeWeather.setLayoutManager(layoutManager3);
 //        rcvAttributeWeather.setAdapter(itemAttributeWeatherAdapter);
 
-        String tempUnit = sharedPreferences.getString(getString(R.string.pref_temp_unit),getString(R.string.pref_temp_default_value));
-        String distanceUnit = sharedPreferences.getString(getString(R.string.pref_distance_unit),getString(R.string.pref_distance_default_value));
-        String speedUnit = sharedPreferences.getString(getString(R.string.pref_speed_unit),getString(R.string.pref_speed_default_value));
+        String tempUnit = sharedPreferences.getString(getString(R.string.pref_temp_unit), getString(R.string.pref_temp_default_value));
+        String distanceUnit = sharedPreferences.getString(getString(R.string.pref_distance_unit), getString(R.string.pref_distance_default_value));
+        String speedUnit = sharedPreferences.getString(getString(R.string.pref_speed_unit), getString(R.string.pref_speed_default_value));
 
-        if(tempUnit.equals(getString(R.string.pref_temp_default_value))){
+        if (tempUnit.equals(getString(R.string.pref_temp_default_value))) {
             tvTemperature.setText(String.valueOf(Common.covertFtoC(weatherResult.getCurrently().getTemperature())) + tempUnit);
             tvDewPoint.setText(String.valueOf(Common.covertFtoC(weatherResult.getCurrently().getDewPoint())) + tempUnit);
-        }
-        else{
+        } else {
             tvTemperature.setText(String.valueOf((int) weatherResult.getCurrently().getTemperature()) + tempUnit);
             tvDewPoint.setText(String.valueOf((int) weatherResult.getCurrently().getDewPoint()) + tempUnit);
         }
 
-        if(distanceUnit.equals(getString(R.string.pref_distance_default_value))){
+        if (distanceUnit.equals(getString(R.string.pref_distance_default_value))) {
             tvVisibility.setText(String.valueOf((int) weatherResult.getCurrently().getVisibility()) + " " + distanceUnit);
-        }
-        else{
+        } else {
             tvVisibility.setText(String.valueOf(Common.kmsToMiles(weatherResult.getCurrently().getVisibility())) + " " + distanceUnit);
         }
 
-        if(speedUnit.equals(getString(R.string.pref_speed_default_value))){
+        if (speedUnit.equals(getString(R.string.pref_speed_default_value))) {
             tvWindSpeed.setText(String.valueOf((int) weatherResult.getCurrently().getWindSpeed()) + " " + speedUnit);
-        }
-        else if(speedUnit.equals("km/h")){
+        } else if (speedUnit.equals("km/h")) {
             tvWindSpeed.setText(String.valueOf(Common.mpsToKmph(weatherResult.getCurrently().getWindSpeed())) + " " + speedUnit);
-        }
-        else if(speedUnit.equals("mph")){
+        } else if (speedUnit.equals("mph")) {
             tvWindSpeed.setText(String.valueOf(Common.mpsToMph(weatherResult.getCurrently().getWindSpeed())) + " " + speedUnit);
         }
 
-        tvHumidity.setText((int)(weatherResult.getCurrently().getHumidity() * 100) + " %");
+        tvHumidity.setText((int) (weatherResult.getCurrently().getHumidity() * 100) + " %");
         tvDescription.setText(new StringBuilder(String.valueOf(weatherResult.getCurrently().getSummary())));
         String cloud = String.valueOf(weatherResult.getCurrently().getCloudCover());
         double cloudPerc = Double.parseDouble(cloud) * 100;
@@ -306,59 +272,58 @@ public class WeatherDetailFragment extends Fragment implements View.OnScrollChan
         tvUVIndex.setText(new StringBuilder(String.valueOf(weatherResult.getCurrently().getUvIndex())));
 
 
-
         // TODO: update Air Quality View
         float aqiIndex;
         //get aqi from model
         if (airQuality != null)
-         aqiIndex = airQuality.getData().aqi;
+            aqiIndex = airQuality.getData().aqi;
         else aqiIndex = 0;
 
         //125 is provided for example purpose
 
-        airQualityindexScale.post(new Runnable(){
-            public void run(){
-                ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) aqiIndexIndicator.getLayoutParams();
-                float scaleWidth = (float)  airQualityindexScale.getWidth();
-                float leftMargin =  aqiIndex / 500 * scaleWidth;
-                params.leftMargin = (int) leftMargin;
-                aqiIndexIndicator.setLayoutParams(params);
-                tvAqiIndex.setText(String.valueOf((int)aqiIndex));
-                if(aqiIndex <= 50){
-                    tvAqiIndex.setTextColor(getResources().getColor(R.color.aqi_good));
-                    tvAqiLevel.setText(getString(R.string.aqi_good));
-                    tvAqiDes.setText(getString(R.string.aqi_good_des));
-                }
-                else if(aqiIndex > 50 && aqiIndex <= 100){
-                    tvAqiIndex.setTextColor(getResources().getColor(R.color.aqi_moderate));
-                    tvAqiLevel.setText(getString(R.string.aqi_moderate));
-                    tvAqiDes.setText(getString(R.string.aqi_moderate_des));
-                }
-                else if(aqiIndex > 100 && aqiIndex <= 150){
-                    tvAqiIndex.setTextColor(getResources().getColor(R.color.aqi_unhealthy_sensitive));
-                    tvAqiLevel.setText(getString(R.string.aqi_unhealthy_sensitive));
-                    tvAqiDes.setText(getString(R.string.aqi_unhealthy_sensitive_des));
-                }
-                else if(aqiIndex > 150 && aqiIndex <= 200){
-                    tvAqiIndex.setTextColor(getResources().getColor(R.color.aqi_unhealthy));
-                    tvAqiLevel.setText(getString(R.string.aqi_unhealthy));
-                    tvAqiDes.setText(getString(R.string.aqi_unhealthy_des));
-                }
-                else if(aqiIndex > 200 && aqiIndex <= 300){
-                    tvAqiIndex.setTextColor(getResources().getColor(R.color.aqi_very_unhealthy));
-                    tvAqiLevel.setText(getString(R.string.aqi_very_unhealthy));
-                    tvAqiDes.setText(getString(R.string.aqi_very_unhealthy_des));
-                }
-                else if(aqiIndex > 300 && aqiIndex <= 500){
-                    tvAqiIndex.setTextColor(getResources().getColor(R.color.aqi_hazardous));
-                    tvAqiLevel.setText(getString(R.string.aqi_hazardous));
-                    tvAqiDes.setText(getString(R.string.aqi_hazardous_des));
+        airQualityindexScale.post(new Runnable() {
+            public void run() {
+                try {
+                    ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) aqiIndexIndicator.getLayoutParams();
+                    float scaleWidth = (float) airQualityindexScale.getWidth();
+                    float leftMargin = aqiIndex / 500 * scaleWidth;
+                    params.leftMargin = (int) leftMargin;
+                    aqiIndexIndicator.setLayoutParams(params);
+                }catch (Exception e ){
+                    Toast.makeText(getContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
                 }
 
             }
         });
 
-
+        tvAqiIndex.setText(String.valueOf((int) aqiIndex));
+        if (aqiIndex <= 50) {
+            tvAqiIndex.setTextColor(getResources().getColor(R.color.aqi_good));
+            tvAqiLevel.setText(getString(R.string.aqi_good));
+            tvAqiDes.setText(getString(R.string.aqi_good_des));
+        } else if (aqiIndex > 50 && aqiIndex <= 100) {
+            tvAqiIndex.setTextColor(getResources().getColor(R.color.aqi_moderate));
+            tvAqiLevel.setText(getString(R.string.aqi_moderate));
+            tvAqiDes.setText(getString(R.string.aqi_moderate_des));
+        } else if (aqiIndex > 100 && aqiIndex <= 150) {
+            tvAqiIndex.setTextColor(getResources().getColor(R.color.aqi_unhealthy_sensitive));
+            tvAqiLevel.setText(getString(R.string.aqi_unhealthy_sensitive));
+            tvAqiDes.setText(getString(R.string.aqi_unhealthy_sensitive_des));
+        } else if (aqiIndex > 150 && aqiIndex <= 200) {
+            getResources().getColor(R.color.aqi_unhealthy);
+            tvAqiIndex.setTextColor(getResources().getColor(R.color.aqi_unhealthy));
+            tvAqiLevel.setText(getString(R.string.aqi_unhealthy));
+            tvAqiDes.setText(getString(R.string.aqi_unhealthy_des));
+        } else if (aqiIndex > 200 && aqiIndex <= 300) {
+            tvAqiIndex.setTextColor(getResources().getColor(R.color.aqi_very_unhealthy));
+            tvAqiLevel.setText(getString(R.string.aqi_very_unhealthy));
+            tvAqiDes.setText(getString(R.string.aqi_very_unhealthy_des));
+        } else if (aqiIndex > 300 && aqiIndex <= 500) {
+            tvAqiIndex.setTextColor(getResources().getColor(R.color.aqi_hazardous));
+            tvAqiLevel.setText(getString(R.string.aqi_hazardous));
+            tvAqiDes.setText(getString(R.string.aqi_hazardous_des));
+        }
+        refreshLayout.setRefreshing(false);
 
     }
 
@@ -384,7 +349,7 @@ public class WeatherDetailFragment extends Fragment implements View.OnScrollChan
                         , mLinerLayout1.getHeight() + mLinerLayout2.getHeight() + mLinerLayour3.getHeight() - scrollY));
                 break;
             case R.id.scrollView_2:
-                if (scrollView1.canScrollVertically(1)){
+                if (scrollView1.canScrollVertically(1)) {
                     scrollView2.scrollTo(0, 0);
                 } else scrollView2.scrollTo(0, scrollY);
                 break;

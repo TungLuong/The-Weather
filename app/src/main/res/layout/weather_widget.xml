@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="@dimen/widget_margin">
+    android:padding="@dimen/widget_padding">
     <LinearLayout
         android:id="@+id/linear_layout"
         android:layout_width="wrap_content"
@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/tv_time_update"
         android:layout_below="@id/linear_layout"
-        android:text="last update : 00:37"
+        android:text="00:37"
         android:fontFamily="@font/roboto_thin"
         android:textSize="18sp"
         />

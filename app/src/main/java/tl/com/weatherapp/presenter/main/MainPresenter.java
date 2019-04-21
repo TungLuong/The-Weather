@@ -49,10 +49,11 @@ public class MainPresenter implements IMainPresenter {
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (intent.getAction().equals("android.net.conn.CONNECTIVITY_CHANGE")) {
-                    if (!isConnected(mContext)) {
+                    if (!isConnectedNetwork(mContext)) {
                         if(dialogInternet == null) {
                             dialogInternet = buildDialogInternet(mContext).show();
                         }else dialogInternet.show();
+                        iMainView.showNotifiConnection(true);
                     }
                     else {
                         if (dialogInternet != null)
@@ -62,6 +63,7 @@ public class MainPresenter implements IMainPresenter {
                                 dialogLocation = buildDialogLocation(context).show();
                             }else dialogLocation.show();
                         }
+                        iMainView.showNotifiConnection(false);
                     }
 
                    // modelNetwork.create(mContext);
@@ -86,108 +88,8 @@ public class MainPresenter implements IMainPresenter {
         mContext.registerReceiver(receiver, filter);
     }
 
-//    private void init() {
 
-    // register broadcast
-//        IntentFilter filter = new IntentFilter();
-//        filter.addAction(ACTION_RECEIVER_RESPONSE_FROM_WIDGET);
-//        filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
-//        filter.addAction("android.location.PROVIDERS_CHANGED");
-//
-//        UIBroadcastReceiver = new BroadcastReceiver() {
-//            @RequiresApi(api = Build.VERSION_CODES.N)
-//            @Override
-//            public void onReceive(Context context, Intent intent) {
-//                if (intent.getAction().equals(ACTION_RECEIVER_RESPONSE_FROM_WIDGET)) {
-//                    WeatherResult weatherResult = (WeatherResult) intent.getSerializableExtra(Common.INTENT_WEATHER_RESULT);
-//                    int addressId = intent.getIntExtra(Common.INTENT_ADDRESS_ID, 0);
-//                    int position = 0;
-//                    for (int i = 0; i < getTotalAddress(); i++) {
-//                        if (sharedPreferences.getInt(SHARE_PREF_ADDRESS_ID_KEY_AT + i, -1) == addressId)
-//                            position = i;
-//                    }
-//                    if (!isReceiver.get(position) && isReceiver.size()>0) {
-//                        isReceiver.set(position, true);
-//                        listWeatherResults.set(position, weatherResult);
-//                        if (position == positionPager && !fragmentHomeIsVisible) {
-//                            openWeatherHomeFragment(positionPager);
-//                            fragmentHomeIsVisible = true;
-//                            loadingView.setVisibility(View.GONE);
-//                        }
-//                        checkFragmentVisible(position);
-//
-//                    }
-//
-//
-//                } else if (intent.getAction().equals("android.net.conn.CONNECTIVITY_CHANGE")) {
-//                    if (isConnected(MainActivity.this)) {
-//                        if(!isEnabledLocation(MainActivity.this)){
-//                            dialogLocation = buildDialogLocation(MainActivity.this).show();
-//                        }
-//                        if (dialogInternet != null) {
-//                            dialogInternet.cancel();
-//                        }
-////                        listWeatherResults = new ArrayList<>();
-////                        isReceiver = new ArrayList<>();
-////                        for (int i = 0; i < totalAddress; i++) {
-////                            listWeatherResults.add(null);
-////                            isReceiver.add(false);
-////                            sendRequestGetWeatherInfo(i);
-////                        }
-//                    }
-//
-//                }else if (intent.getAction().equals("android.location.PROVIDERS_CHANGED")){
-//                    if (isEnabledLocation(MainActivity.this)){
-//                        isReceiver.set(0,false);
-//                        sendRequestGetWeatherInfo(CURRENT_ADDRESS_ID);
-//                    }
-//
-//                }
-//            }
-//        };
-//        registerReceiver(UIBroadcastReceiver, filter);
-//    }
-//
-//    private void checkFragmentVisible(int position) {
-//        List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
-//        if (fragmentList != null) {
-//            for (Fragment fragment : fragmentList) {
-//                if (fragment != null) {
-//                    if (fragment.isVisible()) {
-//                        if (fragment instanceof WeatherAddressFragment) {
-//                            ((WeatherAddressFragment) fragment).getAddressAdapter().notifyItemChanged(position);
-//                            return;
-//                        } else if (fragment instanceof WeatherHomeFragment) {
-//                            ((WeatherHomeFragment) fragment).getAdapter().notifyDataSetChanged();
-//                            return;
-//                        }
-//
-//                    }
-//                }
-//            }
-//        }
-//    }
-//
-//    private boolean checkFragmentCanOpen() {
-//        for (int i = 0; i < isReceiver.size(); i++) {
-//            if (!isReceiver.get(i)) {
-//                return false;
-//            }
-//        }
-//        return true;
-//    }
-//
-//    public void sendRequestGetWeatherInfo(int countAddress) {
-//        if (isConnected(this)) {
-//            Intent intent = new Intent(MainActivity.this, WeatherWidget.class);
-//            intent.setAction(ACTION_GET_WEATHER_RESULT_BY_ADDRESS_ID);
-//            intent.putExtra(Common.INTENT_ADDRESS_ID, countAddress);
-//            sendBroadcast(intent);
-//        }
-//    }
-
-
-    public boolean isConnected(Context context) {
+    public boolean isConnectedNetwork(Context context) {
 
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netinfo = cm.getActiveNetworkInfo();
@@ -205,10 +107,10 @@ public class MainPresenter implements IMainPresenter {
 
     public AlertDialog.Builder buildDialogInternet(Context c) {
         AlertDialog.Builder builder = new AlertDialog.Builder(c);
-        builder.setTitle("No Internet Connection");
-        builder.setMessage("You need to have Mobile Data or wifi to access this.");
+        builder.setTitle(mContext.getString(R.string.title_disconnect));
+        builder.setMessage(mContext.getString(R.string.message_disconnect));
 
-        builder.setNegativeButton("Settings", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(mContext.getString(R.string.setting), new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -218,7 +120,7 @@ public class MainPresenter implements IMainPresenter {
             }
         });
 
-        builder.setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(mContext.getString(R.string.cancel), new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -234,7 +136,7 @@ public class MainPresenter implements IMainPresenter {
         AlertDialog.Builder builder = new AlertDialog.Builder(c);
         builder.setMessage(R.string.gps_network_not_enabled);
 
-        builder.setNegativeButton("Settings", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(mContext.getString(R.string.setting), new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -244,7 +146,7 @@ public class MainPresenter implements IMainPresenter {
             }
         });
 
-        builder.setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(mContext.getString(R.string.cancel), new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {

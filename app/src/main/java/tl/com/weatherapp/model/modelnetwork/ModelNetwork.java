@@ -138,9 +138,9 @@ public class ModelNetwork {
                             saveWeatherDataByAddressId(weatherResult, addressId);
                             if (weatherResultList.size() > 0) {
                                 weatherResultList.set(position, weatherResult);
+                                checkLoadDataFinish();
+                                checkNotifiDataWeather(position);
                             }
-                            checkLoadDataFinish();
-                            checkNotifiWeatherAddress(position);
                         } catch (Exception e) {
                             Toast.makeText(mContext, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
@@ -156,9 +156,9 @@ public class ModelNetwork {
                         WeatherResult weatherResult = getWeatherDataByAddressId(addressId);
                         if (weatherResultList.size() > 0) {
                             weatherResultList.set(position, weatherResult);
+                            checkLoadDataFinish();
+                            checkNotifiDataWeather(position);
                         }
-                        checkLoadDataFinish();
-                        checkNotifiWeatherAddress(position);
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                             updateWeatherWidget(weatherResult, addressId, appWidgetId);
                         }
@@ -172,9 +172,12 @@ public class ModelNetwork {
         return gson.fromJson(strWeatherResult, WeatherResult.class);
     }
 
-    private void checkNotifiWeatherAddress(int position) {
+    private void checkNotifiDataWeather(int position) {
         if (iWeatherAddressPresenter != null) {
             iWeatherAddressPresenter.notifyItemChange(position);
+        }
+        if (iWeatherHomePresenter != null) {
+            iWeatherHomePresenter.notifyItemChange(position);
         }
     }
 
@@ -221,9 +224,9 @@ public class ModelNetwork {
                             saveAirQualityDataByAddressId(airQuality, addressID);
                             if (airQualityList.size() > 0) {
                                 airQualityList.set(position, airQuality);
+                                checkLoadDataFinish();
+                                checkNotifiDataWeather(position);
                             }
-                            checkLoadDataFinish();
-                            checkNotifiWeatherAddress(position);
                         } catch (Exception e) {
                             Toast.makeText(mContext, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
@@ -233,10 +236,11 @@ public class ModelNetwork {
                     public void accept(Throwable throwable) throws Exception {
                         int position = getPagerPositionByAddressId(addressID);
 
-                        if (airQualityList.size() > 0)
+                        if (airQualityList.size() > 0) {
                             airQualityList.set(position, getAirQuailityDataByAddressId(addressID));
-                        checkLoadDataFinish();
-                        checkNotifiWeatherAddress(position);
+                            checkLoadDataFinish();
+                            checkNotifiDataWeather(position);
+                        }
                     }
                 }));
     }
@@ -302,7 +306,7 @@ public class ModelNetwork {
         views.setTextViewText(R.id.tv_temp, temp);
         String lastTimeUpdate = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            lastTimeUpdate = mContext.getString(R.string.last_update) + ": " + Common.convertUnixToTime(weatherResult.getCurrently().getTime());
+            lastTimeUpdate = Common.convertUnixToTime(weatherResult.getCurrently().getTime());
         }
         views.setTextViewText(R.id.tv_time_update, lastTimeUpdate);
         String lastLocation = weatherResult.getAddress();
@@ -316,7 +320,6 @@ public class ModelNetwork {
 
     public void updateWidgetAndInformation(int appWidgetId) {
         int addressID = sharedPreferences.getInt(Common.SHARE_PREF_WIDGET_ADDRESS_ID_KEY_AT + appWidgetId, -1);
-        // neu la location thi kiem tra toa do hien gio
         updateInformationByAddressId(addressID, appWidgetId);
 
     }
@@ -326,7 +329,6 @@ public class ModelNetwork {
             myLocation = new MyLocation();
             myLocation.updateWeatherAndAirQualityDeviceLocation(appWidgetId);
         } else if (addressID != -1) {
-            // cap nhat weatherResult va widget
             float lat = sharedPreferences.getFloat(Common.SHARE_PREF_LAT_KEY_AT + addressID, 0f);
             float lng = sharedPreferences.getFloat(Common.SHARE_PREF_LNG_KEY_AT + addressID, 0f);
             String address = sharedPreferences.getString(Common.SHARE_PREF_ADDRESS_NAME_KEY_AT + addressID, "unknown");
@@ -359,25 +361,14 @@ public class ModelNetwork {
         editor.remove(Common.SHARE_PREF_ADDRESS_ID_KEY_AT + position);
 
         for (int i = position; i < weatherResultList.size() - 1; i++) {
-//            editor.remove("INTENT_ADDRESS_ID"+i);
             int newAddressId = sharedPreferences.getInt(Common.SHARE_PREF_ADDRESS_ID_KEY_AT + (i + 1), -1);
             editor.putInt(Common.SHARE_PREF_ADDRESS_ID_KEY_AT + i, newAddressId);
         }
         totalAddress--;
         editor.putInt(Common.SHARE_PREF_TOTAL_ADDRESS_KEY, totalAddress);
         editor.commit();
-
-//        editor = sharedPreferences.edit();
         weatherResultList.remove(position);
         airQualityList.remove(position);
-//        ((MainActivity) getActivity()).getIsReceiver().remove(position);
-//        ((MainActivity) getActivity()).setTotalAddress(totalAddress - 1);
-//        for (int i = position; i < weatherResultList.size(); i++) {
-//            editor.putFloat("LAT" + i, (float) weatherResultList.get(i).getLatitude());
-//            editor.putFloat("LNG" + i, (float) weatherResultList.get(i).getLongitude());
-//            editor.putString("ADDRESS_NAME" + i, (String) weatherResultList.get(i).getAddress());
-//        }
-//        editor.commit();
         if (position <= curPositionPager) curPositionPager--;
     }
 
@@ -452,7 +443,7 @@ public class ModelNetwork {
     public void updateInformationByPosition(int position) {
         int addressId = sharedPreferences.getInt(Common.SHARE_PREF_ADDRESS_ID_KEY_AT + position, -1);
         updateInformationByAddressId(addressId, UPDATE_ALL_WIDGET);
-        iWeatherHomePresenter.notifyItemChange(position);
+        //iWeatherHomePresenter.notifyItemChange(position);
     }
 
     public void isNotReceiver() {

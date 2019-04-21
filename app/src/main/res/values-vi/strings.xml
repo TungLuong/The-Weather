@@ -43,4 +43,6 @@
     <string name="quit_message">Bạn thực sự muốn thoát?</string>
     <string name="back_text">Quay lại</string>
     <string name="setting">Cài đặt</string>
+    <string name="title_disconnect">Không có mạng</string>
+    <string name="message_disconnect">Bạn cần dữ liệu di động hoặc wifi để thực hiện.</string>
 </resources>

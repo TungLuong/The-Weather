@@ -15,6 +15,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -45,6 +46,7 @@ public class MainActivity extends BaseActivity implements IMainView {
 //    private List<Boolean> isReceiver = new ArrayList<>();
     private RelativeLayout loadingView;
     private MainPresenter mainPresenter;
+    private TextView notifiConnection;
 //    private boolean fragmentHomeIsVisible = false;
 //    private static SharedPreferences sharedPreferences;
 
@@ -74,16 +76,16 @@ public class MainActivity extends BaseActivity implements IMainView {
         requestPermission();
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        Bundle extras = getIntent().getExtras();
-        if (extras != null && mainPresenter != null) {
-            mainPresenter.isNotReceiver();
-            int addressId = extras.getInt(Common.INTENT_ADDRESS_ID);
-            mainPresenter.setCurrentPagerByAppWidgetId(addressId);
-        }
-    }
+//    @Override
+//    protected void onNewIntent(Intent intent) {
+//        super.onNewIntent(intent);
+//        Bundle extras = getIntent().getExtras();
+//        if (extras != null && mainPresenter != null) {
+//            mainPresenter.isNotReceiver();
+//            int addressId = extras.getInt(Common.INTENT_ADDRESS_ID);
+//            mainPresenter.setCurrentPagerByAppWidgetId(addressId);
+//        }
+//    }
 
     private void requestPermission() {
         Dexter.withActivity(this).withPermissions(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -109,6 +111,7 @@ public class MainActivity extends BaseActivity implements IMainView {
     private void initView() {
         loadingView = findViewById(R.id.loading_view);
         loadingView.setVisibility(View.VISIBLE);
+        notifiConnection = findViewById(R.id.tv_notifi_connection);
 //        BookLoading bookLoading = findViewById(R.id.bookloading);
 //        bookLoading.start();
 //        NewtonCradleLoading newtonCradleLoading = findViewById(R.id.newton_cradle_loading);
@@ -131,6 +134,13 @@ public class MainActivity extends BaseActivity implements IMainView {
         loadingView.setVisibility(View.GONE);
     }
 
+    @Override
+    public void showNotifiConnection(boolean b) {
+        if(b) notifiConnection.setVisibility(View.VISIBLE);
+        else notifiConnection.setVisibility(View.GONE);
+
+    }
+
     public void openWeatherAddressFragment() {
         WeatherAddressFragment fragment = new WeatherAddressFragment();
         android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -147,6 +157,10 @@ public class MainActivity extends BaseActivity implements IMainView {
         transaction.replace(R.id.frame_layout, fragment);
         transaction.addToBackStack(null);
         transaction.commitAllowingStateLoss();
+    }
+
+    public boolean isConnectedNetwork(){
+        return mainPresenter.isConnectedNetwork(MainActivity.this);
     }
 
     @Override

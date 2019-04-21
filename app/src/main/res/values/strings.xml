@@ -88,4 +88,6 @@
     <string name="pref_feedback" translatable="true">Feedback</string>
     <string name="pref_help" translatable="true">Help</string>
     <string name="pref_about" translatable="true">About</string>
+    <string name="title_disconnect" translatable="true">No Internet Connection</string>
+    <string name="message_disconnect" translatable="true">You need to have Mobile Data or wifi to access this.</string>
 </resources>
