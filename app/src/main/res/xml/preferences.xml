@@ -34,6 +34,7 @@
             android:entries="@array/pref_lang_entries"
             android:entryValues="@array/pref_lang_values" />
     </PreferenceCategory>
+
     <PreferenceCategory
         android:title="@string/pref_other_group_title">
         <Preference

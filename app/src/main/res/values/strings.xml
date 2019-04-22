@@ -90,4 +90,6 @@
     <string name="pref_about" translatable="true">About</string>
     <string name="title_disconnect" translatable="true">No Internet Connection</string>
     <string name="message_disconnect" translatable="true">You need to have Mobile Data or wifi to access this.</string>
+    <string name="index" translatable="true">Index</string>
+
 </resources>

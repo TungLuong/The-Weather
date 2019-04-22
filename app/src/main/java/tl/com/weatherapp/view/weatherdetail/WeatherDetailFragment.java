@@ -6,7 +6,6 @@ import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,12 +17,13 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -31,6 +31,9 @@ import android.widget.Toast;
 
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import tl.com.weatherapp.R;
 import tl.com.weatherapp.adapter.ItemDailyWeatherAdapter;
@@ -64,7 +67,9 @@ public class WeatherDetailFragment extends Fragment implements View.OnScrollChan
     private TextView tvAqiLevel;
     private TextView tvAqiDes;
     private ImageView aqiIndexIndicator;
-    private LinearLayout airQualityindexScale;
+    private LinearLayout airQualityIndexScale;
+    private RelativeLayout relativeLayoutAqi;
+    private ListView aqiDescription;
 
     //private ProgressBar loading;
     private ImageView background;
@@ -139,7 +144,17 @@ public class WeatherDetailFragment extends Fragment implements View.OnScrollChan
         tvAqiLevel = view.findViewById(R.id.tv_aqi_level);
         tvAqiDes = view.findViewById(R.id.tv_aqi_des);
         aqiIndexIndicator = view.findViewById(R.id.aqi_index_indicator);
-        airQualityindexScale = view.findViewById(R.id.index_scale);
+        airQualityIndexScale = view.findViewById(R.id.index_scale);
+        aqiDescription = view.findViewById(R.id.lv_description_aqi);
+        relativeLayoutAqi = view.findViewById(R.id.relative_layout_aqi);
+        relativeLayoutAqi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (aqiDescription.getVisibility() == View.VISIBLE) aqiDescription.setVisibility(View.GONE);
+                else aqiDescription.setVisibility(View.VISIBLE);
+            }
+        });
+
 
         rcvDaily = view.findViewById(R.id.rcv_daily);
         rcvHourly = view.findViewById(R.id.rcv_hourly);
@@ -272,6 +287,7 @@ public class WeatherDetailFragment extends Fragment implements View.OnScrollChan
         tvUVIndex.setText(new StringBuilder(String.valueOf(weatherResult.getCurrently().getUvIndex())));
 
 
+
         // TODO: update Air Quality View
         float aqiIndex;
         //get aqi from model
@@ -281,11 +297,11 @@ public class WeatherDetailFragment extends Fragment implements View.OnScrollChan
 
         //125 is provided for example purpose
 
-        airQualityindexScale.post(new Runnable() {
+        airQualityIndexScale.post(new Runnable() {
             public void run() {
                 try {
                     ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) aqiIndexIndicator.getLayoutParams();
-                    float scaleWidth = (float) airQualityindexScale.getWidth();
+                    float scaleWidth = (float) airQualityIndexScale.getWidth();
                     float leftMargin = aqiIndex / 500 * scaleWidth;
                     params.leftMargin = (int) leftMargin;
                     aqiIndexIndicator.setLayoutParams(params);
@@ -294,8 +310,32 @@ public class WeatherDetailFragment extends Fragment implements View.OnScrollChan
                 }
 
             }
-        });
+     });
 
+        List<String> listAqiDescription = new ArrayList<>();
+        String strIAQI ;
+
+        strIAQI = airQuality.data.iaqi.pm25 != null ?   String.valueOf(airQuality.data.iaqi.pm25.v) :  "N/A";
+        listAqiDescription.add(String.valueOf(new StringBuilder("").append(getString(R.string.index)).append(" PM 2.5 : ").append(strIAQI)));
+
+        strIAQI = airQuality.data.iaqi.pm10 != null ?   String.valueOf(airQuality.data.iaqi.pm10.v) :  "N/A";
+        listAqiDescription.add(String.valueOf(new StringBuilder("").append(getString(R.string.index)).append(" PM 10  : ").append(strIAQI)));
+
+        strIAQI = airQuality.data.iaqi.co != null ?   String.valueOf(airQuality.data.iaqi.co.v) :  "N/A";
+        listAqiDescription.add(String.valueOf(new StringBuilder("").append(getString(R.string.index)).append(" CO     : ").append(strIAQI)));
+
+        strIAQI = airQuality.data.iaqi.o3 != null ?   String.valueOf(airQuality.data.iaqi.o3.v) :  "N/A";
+        listAqiDescription.add(String.valueOf(new StringBuilder("").append(getString(R.string.index)).append(" O3     : ").append(strIAQI)));
+
+        strIAQI = airQuality.data.iaqi.no2 != null ?   String.valueOf(airQuality.data.iaqi.no2.v) :  "N/A";
+        listAqiDescription.add(String.valueOf(new StringBuilder("").append(getString(R.string.index)).append(" NO2    : ").append(strIAQI)));
+
+        strIAQI = airQuality.data.iaqi.so2 != null ?   String.valueOf(airQuality.data.iaqi.so2.v) :  "N/A";
+        listAqiDescription.add(String.valueOf(new StringBuilder("").append(getString(R.string.index)).append(" SO2    : ").append(strIAQI)));
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
+                R.layout.simple_list_item_in_black_background, android.R.id.text1, listAqiDescription);
+        aqiDescription.setAdapter(adapter);
         tvAqiIndex.setText(String.valueOf((int) aqiIndex));
         if (aqiIndex <= 50) {
             tvAqiIndex.setTextColor(getResources().getColor(R.color.aqi_good));

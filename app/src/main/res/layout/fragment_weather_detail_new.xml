@@ -382,6 +382,7 @@
                         android:fontFamily="@font/roboto_thin"
                         android:textColor="@color/white"/>
                     <RelativeLayout
+                        android:id="@+id/relative_layout_aqi"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp">
@@ -581,6 +582,11 @@
                                 android:textSize="12sp"/>
                         </LinearLayout>
                     </android.support.constraint.ConstraintLayout>
+                    <ListView
+                        android:visibility="gone"
+                        android:id="@+id/lv_description_aqi"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"></ListView>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
