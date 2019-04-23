@@ -17,6 +17,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hai.semicircle.SemiCircle;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
@@ -81,6 +83,7 @@ public class WeatherDetailFragment extends Fragment implements View.OnScrollChan
     private WeatherResult weatherResult;
     private AirQuality airQuality;
 
+    private SemiCircle sunSemiCircle;
 
     private int countAddress;
     private float alphaLinerLayout2 = 1.0f;
@@ -155,6 +158,7 @@ public class WeatherDetailFragment extends Fragment implements View.OnScrollChan
             }
         });
 
+        sunSemiCircle = view.findViewById(R.id.sum_semicircle);
 
         rcvDaily = view.findViewById(R.id.rcv_daily);
         rcvHourly = view.findViewById(R.id.rcv_hourly);
@@ -287,6 +291,24 @@ public class WeatherDetailFragment extends Fragment implements View.OnScrollChan
         tvUVIndex.setText(new StringBuilder(String.valueOf(weatherResult.getCurrently().getUvIndex())));
 
 
+        //Update sun position
+        long rise = weatherResult.getDaily().getData().get(0).getSunriseTime()*1000;
+        long set = weatherResult.getDaily().getData().get(0).getSunsetTime()*1000;
+        String sunriseTime = String.valueOf(DateFormat.format("HH:mm", rise));
+        String sunsetTime = String.valueOf(DateFormat.format("HH:mm", set));
+        sunSemiCircle.setSunriseTime(sunriseTime);
+        sunSemiCircle.setSunsetTime(sunsetTime);
+
+        long cur = System.currentTimeMillis();
+        if (cur > set) {
+            sunSemiCircle.setAngle(180);
+            sunSemiCircle.setEnabled(false);
+        } else {
+            cur -= rise;
+            set -= rise;
+            int angle = (int) ((double) cur/set *180.0);
+            sunSemiCircle.setAngle(angle);
+        }
 
         // TODO: update Air Quality View
         float aqiIndex;

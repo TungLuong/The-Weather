@@ -196,6 +196,7 @@ public class SemiCircle extends View {
 
         canvas.restore();
 
+        canvas.save();
         canvas.translate(mArcRect.centerX(), mArcRect.centerY());
         canvas.drawText(mSunsetTime, mArcRadius - mRisePaint.measureText(mSunriseTime)/2, 40, mRisePaint);
         canvas.drawText(mSunriseTime, -mArcRadius - mSetPaint.measureText(mSunsetTime)/2, 40, mSetPaint);

@@ -6,6 +6,7 @@
     android:layout_height="wrap_content">
 
     <com.hai.semicircle.SemiCircle
+        android:id="@+id/sum_semicircle"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         app:thumb="@drawable/ic_sun"
@@ -15,7 +16,7 @@
         app:arcWidth="1dp"
         app:progressWidth="1dp"
         app:timeTextSize="14sp"
-        app:timeTextColor="#000000"
+        app:timeTextColor="#FFFFFF"
         app:sunriseTime="06:18"
         app:sunsetTime="18:06"
         app:enabled="true"/>
