@@ -71,4 +71,7 @@ dependencies {
     //loading view
     implementation 'com.victor:lib:1.0.4'
 
+    //semicircle module
+    implementation project(':semicircle')
+
 }

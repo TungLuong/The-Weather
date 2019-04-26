@@ -45,6 +45,8 @@
     <string name="aqi_very_unhealthy_des" translatable="true">Everyone may experience serious health effects</string>
     <string name="aqi_hazardous_des" translatable="true">Health warning of emergency conditions</string>
 
+    <string name="sun" translatable="true">Sun</string>
+
     <string name="pref_temp_title" translatable="true">Temperature</string>
     <string name="pref_temp_unit" translatable="false">Temperature</string>
     <string name="pref_temp_default_value" translatable="false">°C</string>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:text="@string/sun"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:fontFamily="@font/roboto_thin"
+        android:textColor="@color/white"/>
+
+    <com.hai.semicircle.SemiCircle
+        android:id="@+id/sum_semicircle"
+        android:layout_width="match_parent"
+        android:layout_height="275dp"
+        app:thumb="@drawable/ic_sun_yellow"
+        app:angle="30"
+        app:arcColor="#696969"
+        app:arcProgressColor="#FFEB3B"
+        app:arcWidth="1dp"
+        app:progressWidth="1dp"
+        app:timeTextSize="14sp"
+        app:timeTextColor="#FFEB3B"
+        app:sunriseTime="06:18"
+        app:sunsetTime="18:06"
+        app:horizontalColor="#4E4E4E"
+        app:enabled="true"/>
+
+</LinearLayout>
