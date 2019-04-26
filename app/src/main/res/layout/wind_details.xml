@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:background="#000">
+    <TextView
+        android:text="@string/wind_title"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:fontFamily="@font/roboto_thin"
+        android:textColor="@color/white"/>
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp">
+        <ImageView
+            android:id="@+id/ground"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:src="#333333"
+            android:padding="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintLeft_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+        <ImageView
+            android:id="@+id/windmill_base"
+            android:layout_width="162dp"
+            android:layout_height="106dp"
+            android:src="@drawable/windmill_base"
+            android:layout_marginLeft="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/ground"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+        <ImageView
+            android:id="@+id/windmill_wings"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/windmill_wings"
+            app:layout_constraintLeft_toLeftOf="@id/windmill_base"
+            app:layout_constraintRight_toRightOf="@id/windmill_base"
+            app:layout_constraintTop_toTopOf="@id/windmill_base"
+            app:layout_constraintBottom_toBottomOf="@id/windmill_base"/>
+
+            <TextView
+                android:id="@+id/wind_speed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/roboto_thin"
+                android:text="26 km/h"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/wind_direction"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/wind_direction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/roboto_thin"
+                android:text="South"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+        </android.support.constraint.ConstraintLayout>
+</LinearLayout>

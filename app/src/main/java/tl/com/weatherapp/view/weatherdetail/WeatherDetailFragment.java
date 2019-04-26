@@ -21,6 +21,9 @@ import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -55,7 +58,7 @@ public class WeatherDetailFragment extends Fragment implements View.OnScrollChan
     private SwipeRefreshLayout refreshLayout;
     private RoundedImageView imgWeather;
     private ImageView iconWeather;
-    private TextView tvCityName, tvHumidity, tvPressure, tvTemperature, tvDateTime, tvWindSpeed, tvDescription, tvDewPoint, tvCloudCover, tvUVIndex, tvVisibility, tvOzone;
+    private TextView tvCityName, tvHumidity, tvPressure, tvTemperature, tvDateTime, tvDescription, tvDewPoint, tvCloudCover, tvUVIndex, tvVisibility, tvOzone;
     private LinearLayout mLinerLayout1, mLinerLayout2, mLinerLayour3;
     private RecyclerView rcvDaily, rcvHourly, rcvAttributeWeather;
     private NestedScrollView scrollView1;
@@ -84,6 +87,10 @@ public class WeatherDetailFragment extends Fragment implements View.OnScrollChan
     private AirQuality airQuality;
 
     private SemiCircle sunSemiCircle;
+    private ImageView windmillWings;
+    private TextView windSpeed;
+    private TextView windDirection;
+
 
     private int countAddress;
     private float alphaLinerLayout2 = 1.0f;
@@ -132,10 +139,9 @@ public class WeatherDetailFragment extends Fragment implements View.OnScrollChan
         background = view.findViewById(R.id.background_image_view);
         tvCityName = view.findViewById(R.id.tv_city_name);
         tvHumidity = view.findViewById(R.id.tv_humidity);
-//        tvPressure = view.findViewById(R.id.tv_pressure);
+        tvPressure = view.findViewById(R.id.tv_pressure);
         tvTemperature = view.findViewById(R.id.tv_temperature);
         tvDateTime = view.findViewById(R.id.tv_date_time);
-        tvWindSpeed = view.findViewById(R.id.tv_wind_speed);
         tvDescription = view.findViewById(R.id.tv_description);
         tvDewPoint = view.findViewById(R.id.tv_dew_point);
         tvCloudCover = view.findViewById(R.id.tv_cloud_cover);
@@ -159,6 +165,9 @@ public class WeatherDetailFragment extends Fragment implements View.OnScrollChan
         });
 
         sunSemiCircle = view.findViewById(R.id.sum_semicircle);
+        windmillWings = view.findViewById(R.id.windmill_wings);
+        windSpeed = view.findViewById(R.id.wind_speed);
+        windDirection = view.findViewById(R.id.wind_direction);
 
         rcvDaily = view.findViewById(R.id.rcv_daily);
         rcvHourly = view.findViewById(R.id.rcv_hourly);
@@ -274,13 +283,85 @@ public class WeatherDetailFragment extends Fragment implements View.OnScrollChan
             tvVisibility.setText(String.valueOf(Common.kmsToMiles(weatherResult.getCurrently().getVisibility())) + " " + distanceUnit);
         }
 
+        tvPressure.setText((int)weatherResult.getCurrently().getPressure() + " mBar");
+
+        double windSpeedMps = weatherResult.getCurrently().getWindSpeed();
         if (speedUnit.equals(getString(R.string.pref_speed_default_value))) {
-            tvWindSpeed.setText(String.valueOf((int) weatherResult.getCurrently().getWindSpeed()) + " " + speedUnit);
+            windSpeed.setText((int) windSpeedMps + " " + speedUnit);
         } else if (speedUnit.equals("km/h")) {
-            tvWindSpeed.setText(String.valueOf(Common.mpsToKmph(weatherResult.getCurrently().getWindSpeed())) + " " + speedUnit);
+            windSpeed.setText(Common.mpsToKmph(windSpeedMps) + " " + speedUnit);
         } else if (speedUnit.equals("mph")) {
-            tvWindSpeed.setText(String.valueOf(Common.mpsToMph(weatherResult.getCurrently().getWindSpeed())) + " " + speedUnit);
+            windSpeed.setText(Common.mpsToMph(windSpeedMps) + " " + speedUnit);
         }
+
+        String windDirectionText = "";
+        if(windSpeedMps > 0){
+            double windBearing = weatherResult.getCurrently().getWindBearing();
+            if((windBearing >= 0 && windBearing < 11.25) || (windBearing >= 348.75 && windBearing <= 360)){
+                windDirectionText = getString(R.string.wind_north);
+            }
+            else if(windBearing >= 11.25 && windBearing < 33.75){
+                windDirectionText = getString(R.string.wind_north) + " - " + getString(R.string.wind_north_east);
+            }
+            else if(windBearing >= 33.75 && windBearing < 56.25){
+                windDirectionText = getString(R.string.wind_north_east);
+            }
+            else if(windBearing >= 56.25 && windBearing < 78.75){
+                windDirectionText = getString(R.string.wind_east) + " - " + getString(R.string.wind_north_east);
+            }
+            else if(windBearing >= 78.75 && windBearing < 101.25){
+                windDirectionText = getString(R.string.wind_east);
+            }
+            else if(windBearing >= 101.25 && windBearing < 123.75){
+                windDirectionText = getString(R.string.wind_east) + " - " + getString(R.string.wind_south_east);
+            }
+            else if(windBearing >= 123.75 && windBearing < 146.25){
+                windDirectionText = getString(R.string.wind_south_east);
+            }
+            else if(windBearing >= 146.25 && windBearing < 168.75){
+                windDirectionText = getString(R.string.wind_south) + " - " + getString(R.string.wind_south_east);
+            }
+            else if(windBearing >= 168.75 && windBearing < 191.25){
+                windDirectionText = getString(R.string.wind_south);
+            }
+            else if(windBearing >= 191.25 && windBearing < 213.75){
+                windDirectionText = getString(R.string.wind_south) + " - " + getString(R.string.wind_south_west);
+            }
+            else if(windBearing >= 213.75 && windBearing < 236.25){
+                windDirectionText = getString(R.string.wind_south_west);
+            }
+            else if(windBearing >= 236.25 && windBearing < 258.75){
+                windDirectionText = getString(R.string.wind_west) + " - " + getString(R.string.wind_south_west);
+            }
+            else if(windBearing >= 258.75 && windBearing < 281.25){
+                windDirectionText = getString(R.string.wind_west);
+            }
+            else if(windBearing >= 281.25 && windBearing < 303.75){
+                windDirectionText = getString(R.string.wind_west) + " - " + getString(R.string.wind_north_west);
+            }
+            else if(windBearing >= 303.75 && windBearing <= 326.25){
+                windDirectionText = getString(R.string.wind_north_west);
+            }
+            else if(windBearing >= 326.25 && windBearing < 348.75){
+                windDirectionText = getString(R.string.wind_north) + " - " + getString(R.string.wind_north_west);
+            }
+        }
+        windDirection.setText(windDirectionText);
+
+        //set Windmill rotating animation
+        windmillWings.clearAnimation();
+        double pinWheelDiameter = 10; //diameter in meter
+
+        double roundPerSec = windSpeedMps/(Math.PI * pinWheelDiameter);
+        int duration = (int) (1000/(roundPerSec));
+        RotateAnimation rotate = new RotateAnimation(0, -360,
+                Animation.RELATIVE_TO_SELF, 0.5f,
+                Animation.RELATIVE_TO_SELF, 0.5f
+        );
+        rotate.setInterpolator(new LinearInterpolator());
+        rotate.setDuration(duration);
+        rotate.setRepeatCount(Animation.INFINITE);
+        windmillWings.startAnimation(rotate);
 
         tvHumidity.setText((int) (weatherResult.getCurrently().getHumidity() * 100) + " %");
         tvDescription.setText(new StringBuilder(String.valueOf(weatherResult.getCurrently().getSummary())));
@@ -310,7 +391,6 @@ public class WeatherDetailFragment extends Fragment implements View.OnScrollChan
             sunSemiCircle.setAngle(angle);
         }
 
-        // TODO: update Air Quality View
         float aqiIndex;
         //get aqi from model
         if (airQuality != null)
