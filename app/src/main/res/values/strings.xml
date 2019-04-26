@@ -46,6 +46,15 @@
     <string name="aqi_hazardous_des" translatable="true">Health warning of emergency conditions</string>
 
     <string name="sun" translatable="true">Sun</string>
+    <string name="wind_title" translatable="true">Wind</string>
+    <string name="wind_north" translatable="true">North</string>
+    <string name="wind_north_east" translatable="true">Northeast</string>
+    <string name="wind_north_west" translatable="true">Northwest</string>
+    <string name="wind_east" translatable="true">East</string>
+    <string name="wind_south" translatable="true">South</string>
+    <string name="wind_south_east" translatable="true">Southeast</string>
+    <string name="wind_south_west" translatable="true">Southwest</string>
+    <string name="wind_west" translatable="true">West</string>
 
     <string name="pref_temp_title" translatable="true">Temperature</string>
     <string name="pref_temp_unit" translatable="false">Temperature</string>
@@ -81,6 +90,16 @@
     <string-array name="pref_lang_values">
         <item>en</item>
         <item>vi</item>
+    </string-array>
+    <string name="pref_pressure_title" translatable="true">Pressure</string>
+    <string name="pref_pressure_unit" translatable="false">Pressure</string>
+    <string name="pref_pressure_default_value" translatable="false">mBar</string>
+    <string-array name="pref_pressure_entries">
+        <item>mBar</item>
+        <item>inHg</item>
+        <item>psi</item>
+        <item>bar</item>
+        <item>mmHg</item>
     </string-array>
 
     <string name="pref_unit_group_title" translatable="true">Units</string>

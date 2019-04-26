@@ -7,10 +7,6 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.annotation.Nullable;
-import android.support.v4.app.NavUtils;
-import android.widget.Toast;
-
-import java.util.Arrays;
 
 import tl.com.weatherapp.R;
 import tl.com.weatherapp.view.main.MainActivity;
@@ -24,6 +20,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         ListPreference tempPref = (ListPreference) findPreference(getString(R.string.pref_temp_unit));
         ListPreference distancePref = (ListPreference) findPreference(getString(R.string.pref_distance_unit));
         ListPreference speedPref = (ListPreference) findPreference(getString(R.string.pref_speed_unit));
+        ListPreference pressurePref = (ListPreference) findPreference(getString(R.string.pref_pressure_unit));
         ListPreference langPref = (ListPreference) findPreference(getString(R.string.pref_lang_key));
         String[] languages = getResources().getStringArray(R.array.pref_lang_entries);
         String[] langPrefValues = getResources().getStringArray(R.array.pref_lang_values);
@@ -31,6 +28,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         tempPref.setSummary(tempPref.getValue());
         distancePref.setSummary(distancePref.getValue());
         speedPref.setSummary(speedPref.getValue());
+        pressurePref.setSummary(pressurePref.getValue());
 
         for(int i = 0; i < langPrefValues.length;i++){
             if(langPrefValues[i].equals(langPref.getValue())){
