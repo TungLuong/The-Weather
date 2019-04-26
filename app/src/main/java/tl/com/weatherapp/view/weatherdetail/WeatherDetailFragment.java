@@ -301,7 +301,7 @@ public class WeatherDetailFragment extends Fragment implements View.OnScrollChan
 
         long cur = System.currentTimeMillis();
         if (cur > set) {
-            sunSemiCircle.setAngle(180);
+            sunSemiCircle.setAngle(0);
             sunSemiCircle.setEnabled(false);
         } else {
             cur -= rise;

@@ -46,4 +46,5 @@
     <string name="title_disconnect">Không có mạng</string>
     <string name="message_disconnect">Bạn cần dữ liệu di động hoặc wifi để thực hiện.</string>
     <string name="index" translatable="true">Chỉ số</string>
+    <string name="sun" translatable="true">Mặt trời</string>
 </resources>

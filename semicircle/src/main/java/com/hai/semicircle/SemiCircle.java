@@ -24,6 +24,8 @@ public class SemiCircle extends View {
     private Paint mArcProgressPaint;
     private Paint mRisePaint;
     private Paint mSetPaint;
+    private Paint mHorizontalPaint;
+    private Paint mDotPaint;
 
     //Arc related dimens
     private int mArcRadius = 0;
@@ -74,6 +76,7 @@ public class SemiCircle extends View {
         int thumbHalfWidth = 0;
         int textSize = 0;
         int textColor = 0;
+        int horizontalColor = 0;
 
 //        mThumb = res.getDrawable(R.drawable.thumb_selector);
 
@@ -114,6 +117,7 @@ public class SemiCircle extends View {
 
             mSunriseTime = array.getString(R.styleable.SemiCircle_sunriseTime);
             mSunsetTime = array.getString(R.styleable.SemiCircle_sunsetTime);
+            horizontalColor = array.getColor(R.styleable.SemiCircle_horizontalColor, horizontalColor);
 
             array.recycle();
         }
@@ -127,15 +131,14 @@ public class SemiCircle extends View {
         mArcPaint.setAntiAlias(true);
         mArcPaint.setStyle(Paint.Style.STROKE);
         mArcPaint.setStrokeWidth(mArcWidth);
-        mArcPaint.setStrokeCap(Paint.Cap.ROUND);
+        mArcPaint.setPathEffect(new DashPathEffect(new float[]{5, 7}, 0));
 
         mArcProgressPaint = new Paint();
         mArcProgressPaint.setColor(arcProgressColor);
         mArcProgressPaint.setAntiAlias(true);
         mArcProgressPaint.setStyle(Paint.Style.STROKE);
         mArcProgressPaint.setStrokeWidth(mArcProgressWidth);
-        mArcProgressPaint.setStrokeCap(Paint.Cap.ROUND);
-        mArcProgressPaint.setPathEffect(new DashPathEffect(new float[]{5, 10}, 0));
+        mArcProgressPaint.setPathEffect(new DashPathEffect(new float[]{5, 7}, 0));
 
         mRisePaint = new Paint();
         mSetPaint = new Paint();
@@ -147,6 +150,17 @@ public class SemiCircle extends View {
         mRisePaint.setColor(textColor);
         mRisePaint.setTextSize(textSize);
         mSetPaint.setTextSize(textSize);
+
+        mHorizontalPaint = new Paint();
+        mHorizontalPaint.setAntiAlias(true);
+        mHorizontalPaint.setStyle(Paint.Style.STROKE);
+        mHorizontalPaint.setStrokeWidth(1);
+        mHorizontalPaint.setColor(horizontalColor);
+
+        mDotPaint = new Paint();
+        mDotPaint.setAntiAlias(true);
+        mDotPaint.setStyle(Paint.Style.FILL);
+        mDotPaint.setColor(arcColor);
 
     }
 
@@ -198,8 +212,11 @@ public class SemiCircle extends View {
 
         canvas.save();
         canvas.translate(mArcRect.centerX(), mArcRect.centerY());
-        canvas.drawText(mSunsetTime, mArcRadius - mRisePaint.measureText(mSunriseTime)/2, 40, mRisePaint);
-        canvas.drawText(mSunriseTime, -mArcRadius - mSetPaint.measureText(mSunsetTime)/2, 40, mSetPaint);
+        canvas.drawText(mSunsetTime, mArcRadius - mRisePaint.measureText(mSunriseTime)/2, 50, mRisePaint);
+        canvas.drawText(mSunriseTime, -mArcRadius - mSetPaint.measureText(mSunsetTime)/2, 50, mSetPaint);
+        canvas.drawLine(-mArcRadius*1.5f, 0, mArcRadius*1.5f, 0, mHorizontalPaint);
+        canvas.drawCircle(-mArcRadius, 0 , 5, mDotPaint);
+        canvas.drawCircle(mArcRadius, 0 , 5, mDotPaint);
         canvas.restore();
 
         if (mEnabled) {
