@@ -283,7 +283,8 @@ public class WeatherDetailFragment extends Fragment implements View.OnScrollChan
             tvVisibility.setText(String.valueOf(Common.kmsToMiles(weatherResult.getCurrently().getVisibility())) + " " + distanceUnit);
         }
 
-        tvPressure.setText((int)weatherResult.getCurrently().getPressure() + " mBar");
+        String pressureUnit = sharedPreferences.getString(getString(R.string.pref_pressure_unit), getString(R.string.pref_pressure_default_value));
+        tvPressure.setText(Common.pressureConverter(weatherResult.getCurrently().getPressure(),pressureUnit));
 
         double windSpeedMps = weatherResult.getCurrently().getWindSpeed();
         if (speedUnit.equals(getString(R.string.pref_speed_default_value))) {

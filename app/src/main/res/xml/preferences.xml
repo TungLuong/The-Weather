@@ -24,6 +24,13 @@
             android:defaultValue="@string/pref_speed_default_value"
             android:entryValues="@array/pref_speed_entries">
         </ListPreference>
+        <ListPreference
+            android:key="@string/pref_pressure_unit"
+            android:title="@string/pref_pressure_title"
+            android:entries="@array/pref_pressure_entries"
+            android:defaultValue="@string/pref_pressure_default_value"
+            android:entryValues="@array/pref_pressure_entries">
+        </ListPreference>
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/pref_language_group_title">

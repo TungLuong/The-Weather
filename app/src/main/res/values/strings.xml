@@ -91,6 +91,16 @@
         <item>en</item>
         <item>vi</item>
     </string-array>
+    <string name="pref_pressure_title" translatable="true">Pressure</string>
+    <string name="pref_pressure_unit" translatable="false">Pressure</string>
+    <string name="pref_pressure_default_value" translatable="false">mBar</string>
+    <string-array name="pref_pressure_entries">
+        <item>mBar</item>
+        <item>inHg</item>
+        <item>psi</item>
+        <item>bar</item>
+        <item>mmHg</item>
+    </string-array>
 
     <string name="pref_unit_group_title" translatable="true">Units</string>
     <string name="pref_language_group_title" translatable="true">Language</string>
