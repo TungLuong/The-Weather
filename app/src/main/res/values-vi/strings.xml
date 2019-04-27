@@ -45,6 +45,7 @@
     <string name="setting">Cài đặt</string>
     <string name="title_disconnect">Không có mạng</string>
     <string name="message_disconnect">Bạn cần dữ liệu di động hoặc wifi để thực hiện.</string>
+<<<<<<< HEAD
     <string name="index">Chỉ số</string>
     <string name="pref_notification_group_title" >Thông báo</string>
     <string name="pref_daily_notification" translatable="true">Thông báo hàng ngày </string>
@@ -53,4 +54,18 @@
     <string name="gps_network_enabled">Gps đã bật</string>
     <string name="update_successful">Cập nhật dữ liệu thành công</string>
 
+=======
+    <string name="index" translatable="true">Chỉ số</string>
+    <string name="sun" translatable="true">Mặt trời</string>
+    <string name="wind_title">Gió</string>
+    <string name="wind_east">Đông</string>
+    <string name="wind_north">Bắc</string>
+    <string name="wind_south">Nam</string>
+    <string name="wind_west">Tây</string>
+    <string name="wind_north_east">Đông bắc</string>
+    <string name="wind_north_west">Tây bắc</string>
+    <string name="wind_south_east">Đông nam</string>
+    <string name="wind_south_west">Tây nam</string>
+    <string name="pref_pressure_title">Áp suất</string>
+>>>>>>> 991cb8b54193326f1941193f66ad237d0de52efd
 </resources>

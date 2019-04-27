@@ -1,7 +1,6 @@
 package tl.com.weatherapp.common;
 
 import android.icu.text.SimpleDateFormat;
-import android.location.Location;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 
@@ -76,5 +75,36 @@ public class Common {
 
     public static int mpsToMph(double speed){
         return(int) (0.277778 * 3.6 * speed);
+    }
+
+    public static String pressureConverter(double value,String unit){
+        String output = "";
+        switch (unit){
+            case "mBar":{
+                output = (int) value + " mBar";
+                break;
+            }
+            case "inHg":{
+                output = (int)(value * 0.03) + " inHg";
+                break;
+            }
+            case "psi":{
+                output = (int)(value * 0.014) + " psi";
+                break;
+            }
+            case "bar":{
+                output = (int)(value * 0.001) + " bar";
+                break;
+            }
+            case "mmHg":{
+                output = (int)(value * 0.75) + " mmHg";
+                break;
+            }
+            default:{
+                output = (int) value + " mBar";
+                break;
+            }
+        }
+        return output;
     }
 }

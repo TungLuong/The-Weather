@@ -168,7 +168,7 @@
                             android:layout_marginEnd="8dp"
                             android:orientation="vertical">
                             <ImageView
-                                android:src="@drawable/ic_wind"
+                                android:src="@drawable/ic_ometer"
                                 android:layout_gravity="center"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" />
@@ -180,9 +180,9 @@
                                 android:layout_gravity="center"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/WindSpeed"/>
+                                android:text="@string/Pressure"/>
                             <TextView
-                                android:id="@+id/tv_wind_speed"
+                                android:id="@+id/tv_pressure"
                                 android:textSize="18sp"
                                 android:textColor="@color/white"
                                 android:padding="4dp"
@@ -190,7 +190,7 @@
                                 android:layout_gravity="center"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="20km/h"/>
+                                android:text="20 mBar"/>
                         </LinearLayout>
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -588,6 +588,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="250dp"></ListView>
                 </LinearLayout>
+                <include layout="@layout/sun_rise_set"/>
+                <include layout="@layout/wind_details"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

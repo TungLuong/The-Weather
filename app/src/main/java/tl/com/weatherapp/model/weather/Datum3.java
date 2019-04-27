@@ -7,8 +7,8 @@ public class Datum3 implements Serializable {
     private int time ;
     private String summary ;
     private String icon ;
-    private int sunriseTime ;
-    private int sunsetTime ;
+    private long sunriseTime ;
+    private long sunsetTime ;
     private double moonPhase ;
     private double precipIntensity ;
     private double precipIntensityMax ;
@@ -68,7 +68,7 @@ public class Datum3 implements Serializable {
         this.icon = icon;
     }
 
-    public int getSunriseTime() {
+    public long getSunriseTime() {
         return sunriseTime;
     }
 
@@ -76,7 +76,7 @@ public class Datum3 implements Serializable {
         this.sunriseTime = sunriseTime;
     }
 
-    public int getSunsetTime() {
+    public long getSunsetTime() {
         return sunsetTime;
     }
 
