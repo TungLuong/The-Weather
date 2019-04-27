@@ -36,6 +36,16 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:title="@string/pref_notification_group_title">
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="@string/pref_daily_notification_key"
+            android:title="@string/pref_daily_notification"/>
+        <Preference
+            android:key="@string/pref_time_notification_key"
+            android:title="@string/pref_time_notification"/>
+    </PreferenceCategory>
+    <PreferenceCategory
         android:title="@string/pref_other_group_title">
         <Preference
             android:title="@string/pref_feedback"/>

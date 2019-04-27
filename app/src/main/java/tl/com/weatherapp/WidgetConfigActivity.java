@@ -1,7 +1,6 @@
 package tl.com.weatherapp;
 
 import android.appwidget.AppWidgetManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +9,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -52,8 +50,8 @@ public class WidgetConfigActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(Common.DATA, MODE_PRIVATE);
         int totalAddress = sharedPreferences.getInt(Common.SHARE_PREF_TOTAL_ADDRESS_KEY, 1);
         for (int i = 0; i < totalAddress; i++) {
-            int addressId = sharedPreferences.getInt(Common.SHARE_PREF_ADDRESS_ID_KEY_AT+i,-1);
-            listAddress.add(sharedPreferences.getString(Common.SHARE_PREF_ADDRESS_NAME_KEY_AT +addressId , "unknown"));
+            int addressId = sharedPreferences.getInt(Common.SHARE_PREF_ADDRESS_ID_KEY_IN_POSITION +i,-1);
+            listAddress.add(sharedPreferences.getString(Common.SHARE_PREF_ADDRESS_NAME_KEY_IN_ADDRESS_ID +addressId , "unknown"));
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, android.R.id.text1, listAddress);
@@ -66,8 +64,8 @@ public class WidgetConfigActivity extends AppCompatActivity {
 
                 // sua thong tin widget
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                int addressId = sharedPreferences.getInt(Common.SHARE_PREF_ADDRESS_ID_KEY_AT +position,-1);
-                editor.putInt(Common.SHARE_PREF_WIDGET_ADDRESS_ID_KEY_AT+appWidgetId,addressId);
+                int addressId = sharedPreferences.getInt(Common.SHARE_PREF_ADDRESS_ID_KEY_IN_POSITION +position,-1);
+                editor.putInt(Common.SHARE_PREF_ADDRESS_ID_KEY_BY_WIDGET_ID +appWidgetId,addressId);
                 editor.commit();
 
                 Toast.makeText(WidgetConfigActivity.this, "INTENT_ADDRESS_ID: "+addressId, Toast.LENGTH_SHORT).show();

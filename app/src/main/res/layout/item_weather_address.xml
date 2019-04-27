@@ -96,7 +96,8 @@
                     android:text=""
                     android:fontFamily="@font/roboto_thin"
                     android:textColor="@color/white"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    android:maxWidth="250dp"/>
 
                 <ImageView
                     android:id="@+id/is_location_enable"

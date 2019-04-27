@@ -11,7 +11,6 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -22,8 +21,6 @@ import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.maps.model.LatLng;
@@ -58,7 +55,7 @@ import tl.com.weatherapp.presenter.main.IMainPresenter;
 import static android.content.Context.MODE_PRIVATE;
 import static tl.com.weatherapp.common.Common.CURRENT_ADDRESS_ID;
 import static tl.com.weatherapp.common.Common.NO_UPDATE_WIDGET;
-import static tl.com.weatherapp.common.Common.SHARE_PREF_ADDRESS_ID_KEY_AT;
+import static tl.com.weatherapp.common.Common.SHARE_PREF_ADDRESS_ID_KEY_IN_POSITION;
 import static tl.com.weatherapp.common.Common.UPDATE_ALL_WIDGET;
 
 public class ModelNetwork {
@@ -112,7 +109,7 @@ public class ModelNetwork {
         for (int i = 0; i < totalAddress; i++) {
             weatherResultList.add(null);
             airQualityList.add(null);
-            int addressId = sharedPreferences.getInt(SHARE_PREF_ADDRESS_ID_KEY_AT + i, CURRENT_ADDRESS_ID);
+            int addressId = sharedPreferences.getInt(SHARE_PREF_ADDRESS_ID_KEY_IN_POSITION + i, CURRENT_ADDRESS_ID);
             updateInformationByAddressId(addressId, UPDATE_ALL_WIDGET);
         }
     }
@@ -168,7 +165,7 @@ public class ModelNetwork {
     }
 
     private WeatherResult getWeatherDataByAddressId(int addressId) {
-        String strWeatherResult = sharedPreferences.getString(Common.SHARE_PREF_WEATHER_KEY_AT + addressId, "");
+        String strWeatherResult = sharedPreferences.getString(Common.SHARE_PREF_WEATHER_RESULT_KEY_IN_ADDRESS_ID + addressId, "");
         return gson.fromJson(strWeatherResult, WeatherResult.class);
     }
 
@@ -191,13 +188,13 @@ public class ModelNetwork {
     private void saveWeatherDataByAddressId(WeatherResult weatherResult, int addressId) {
         String strWeatherResult = gson.toJson(weatherResult);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(Common.SHARE_PREF_WEATHER_KEY_AT + addressId, strWeatherResult);
+        editor.putString(Common.SHARE_PREF_WEATHER_RESULT_KEY_IN_ADDRESS_ID + addressId, strWeatherResult);
         editor.commit();
     }
 
     private int getPagerPositionByAddressId(int addressId) {
         for (int position = 0; position < totalAddress; position++) {
-            if (sharedPreferences.getInt(SHARE_PREF_ADDRESS_ID_KEY_AT + position, -1) == addressId) {
+            if (sharedPreferences.getInt(SHARE_PREF_ADDRESS_ID_KEY_IN_POSITION + position, -1) == addressId) {
                 return position;
             }
         }
@@ -246,14 +243,14 @@ public class ModelNetwork {
     }
 
     private AirQuality getAirQuailityDataByAddressId(int addressID) {
-        String strAirQuality = sharedPreferences.getString(Common.SHARE_PREF_AIR_QUALITY_KEY_AT + addressID, "");
+        String strAirQuality = sharedPreferences.getString(Common.SHARE_PREF_AIR_QUALITY_KEY_IN_ADDRESS_ID + addressID, "");
         return gson.fromJson(strAirQuality, AirQuality.class);
     }
 
     private void saveAirQualityDataByAddressId(AirQuality airQuality, int addressID) {
         String strAirQuality = gson.toJson(airQuality);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(Common.SHARE_PREF_AIR_QUALITY_KEY_AT + addressID, strAirQuality);
+        editor.putString(Common.SHARE_PREF_AIR_QUALITY_KEY_IN_ADDRESS_ID + addressID, strAirQuality);
         editor.commit();
     }
 
@@ -274,7 +271,7 @@ public class ModelNetwork {
             ComponentName name = new ComponentName(mContext.getPackageName(), WeatherWidget.class.getName());
             int[] appWidgetIds = appWidgetManager.getAppWidgetIds(name);
             for (int id : appWidgetIds) {
-                int wgAddressId = sharedPreferences.getInt(Common.SHARE_PREF_WIDGET_ADDRESS_ID_KEY_AT + id, -1);
+                int wgAddressId = sharedPreferences.getInt(Common.SHARE_PREF_ADDRESS_ID_KEY_BY_WIDGET_ID + id, -1);
                 if (weatherResult != null && wgAddressId != -1 && wgAddressId == addressID) {
                     updatAppWidget(weatherResult, views, id);
                     appWidgetManager.updateAppWidget(id, views);
@@ -319,7 +316,7 @@ public class ModelNetwork {
     }
 
     public void updateWidgetAndInformation(int appWidgetId) {
-        int addressID = sharedPreferences.getInt(Common.SHARE_PREF_WIDGET_ADDRESS_ID_KEY_AT + appWidgetId, -1);
+        int addressID = sharedPreferences.getInt(Common.SHARE_PREF_ADDRESS_ID_KEY_BY_WIDGET_ID + appWidgetId, -1);
         updateInformationByAddressId(addressID, appWidgetId);
 
     }
@@ -329,9 +326,9 @@ public class ModelNetwork {
             myLocation = new MyLocation();
             myLocation.updateWeatherAndAirQualityDeviceLocation(appWidgetId);
         } else if (addressID != -1) {
-            float lat = sharedPreferences.getFloat(Common.SHARE_PREF_LAT_KEY_AT + addressID, 0f);
-            float lng = sharedPreferences.getFloat(Common.SHARE_PREF_LNG_KEY_AT + addressID, 0f);
-            String address = sharedPreferences.getString(Common.SHARE_PREF_ADDRESS_NAME_KEY_AT + addressID, "unknown");
+            float lat = sharedPreferences.getFloat(Common.SHARE_PREF_LAT_KEY_IN_ADDRESS_ID + addressID, 0f);
+            float lng = sharedPreferences.getFloat(Common.SHARE_PREF_LNG_KEY_IN_ADDRESS_ID + addressID, 0f);
+            String address = sharedPreferences.getString(Common.SHARE_PREF_ADDRESS_NAME_KEY_IN_ADDRESS_ID + addressID, "unknown");
             updateWeatherInformation(lat, lng, addressID, address, appWidgetId);
             updateAirQualityIndex(lat, lng, addressID);
         }
@@ -350,19 +347,19 @@ public class ModelNetwork {
 
     public void deleteItem(int position) {
         SharedPreferences sharedPreferences = mContext.getSharedPreferences(Common.DATA, MODE_PRIVATE);
-        int addressId = sharedPreferences.getInt(Common.SHARE_PREF_ADDRESS_ID_KEY_AT + position, -1);
+        int addressId = sharedPreferences.getInt(Common.SHARE_PREF_ADDRESS_ID_KEY_IN_POSITION + position, -1);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        editor.remove(Common.SHARE_PREF_LAT_KEY_AT + addressId);
-        editor.remove(Common.SHARE_PREF_LAT_KEY_AT + addressId);
-        editor.remove(Common.SHARE_PREF_ADDRESS_NAME_KEY_AT + addressId);
-        editor.remove(Common.SHARE_PREF_WEATHER_KEY_AT + addressId);
-        editor.remove(Common.SHARE_PREF_AIR_QUALITY_KEY_AT + addressId);
-        editor.remove(Common.SHARE_PREF_ADDRESS_ID_KEY_AT + position);
+        editor.remove(Common.SHARE_PREF_LAT_KEY_IN_ADDRESS_ID + addressId);
+        editor.remove(Common.SHARE_PREF_LAT_KEY_IN_ADDRESS_ID + addressId);
+        editor.remove(Common.SHARE_PREF_ADDRESS_NAME_KEY_IN_ADDRESS_ID + addressId);
+        editor.remove(Common.SHARE_PREF_WEATHER_RESULT_KEY_IN_ADDRESS_ID + addressId);
+        editor.remove(Common.SHARE_PREF_AIR_QUALITY_KEY_IN_ADDRESS_ID + addressId);
+        editor.remove(Common.SHARE_PREF_ADDRESS_ID_KEY_IN_POSITION + position);
 
         for (int i = position; i < weatherResultList.size() - 1; i++) {
-            int newAddressId = sharedPreferences.getInt(Common.SHARE_PREF_ADDRESS_ID_KEY_AT + (i + 1), -1);
-            editor.putInt(Common.SHARE_PREF_ADDRESS_ID_KEY_AT + i, newAddressId);
+            int newAddressId = sharedPreferences.getInt(Common.SHARE_PREF_ADDRESS_ID_KEY_IN_POSITION + (i + 1), -1);
+            editor.putInt(Common.SHARE_PREF_ADDRESS_ID_KEY_IN_POSITION + i, newAddressId);
         }
         totalAddress--;
         editor.putInt(Common.SHARE_PREF_TOTAL_ADDRESS_KEY, totalAddress);
@@ -379,20 +376,20 @@ public class ModelNetwork {
         airQualityList.add(newPo, airQuality);
 
         SharedPreferences sharedPreferences = mContext.getSharedPreferences(Common.DATA, MODE_PRIVATE);
-        int addressId = sharedPreferences.getInt(Common.SHARE_PREF_ADDRESS_ID_KEY_AT + oldPo, -1);
+        int addressId = sharedPreferences.getInt(Common.SHARE_PREF_ADDRESS_ID_KEY_IN_POSITION + oldPo, -1);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         if (newPo < oldPo) {
             for (int i = newPo; i < oldPo; i++) {
-                int newAddressId = sharedPreferences.getInt(Common.SHARE_PREF_ADDRESS_ID_KEY_AT + i, -1);
-                editor.putInt(Common.SHARE_PREF_ADDRESS_ID_KEY_AT + (i + 1), newAddressId);
+                int newAddressId = sharedPreferences.getInt(Common.SHARE_PREF_ADDRESS_ID_KEY_IN_POSITION + i, -1);
+                editor.putInt(Common.SHARE_PREF_ADDRESS_ID_KEY_IN_POSITION + (i + 1), newAddressId);
             }
-            editor.putInt(Common.SHARE_PREF_ADDRESS_ID_KEY_AT + newPo, addressId);
+            editor.putInt(Common.SHARE_PREF_ADDRESS_ID_KEY_IN_POSITION + newPo, addressId);
         } else if (newPo > oldPo) {
             for (int i = newPo; i > oldPo; i--) {
-                int newAddressId = sharedPreferences.getInt(Common.SHARE_PREF_ADDRESS_ID_KEY_AT + i, -1);
-                editor.putInt(Common.SHARE_PREF_ADDRESS_ID_KEY_AT + (i - 1), newAddressId);
+                int newAddressId = sharedPreferences.getInt(Common.SHARE_PREF_ADDRESS_ID_KEY_IN_POSITION + i, -1);
+                editor.putInt(Common.SHARE_PREF_ADDRESS_ID_KEY_IN_POSITION + (i - 1), newAddressId);
             }
-            editor.putInt(Common.SHARE_PREF_ADDRESS_ID_KEY_AT + newPo, addressId);
+            editor.putInt(Common.SHARE_PREF_ADDRESS_ID_KEY_IN_POSITION + newPo, addressId);
         }
         editor.commit();
     }
@@ -422,9 +419,9 @@ public class ModelNetwork {
     }
 
     public void setCurrentPagerByAppWidgetId(int appWidgetId) {
-        int addressId = sharedPreferences.getInt(Common.SHARE_PREF_WIDGET_ADDRESS_ID_KEY_AT + appWidgetId, -1);
+        int addressId = sharedPreferences.getInt(Common.SHARE_PREF_ADDRESS_ID_KEY_BY_WIDGET_ID + appWidgetId, -1);
         for (int position = 0; position < totalAddress; position++) {
-            int sfAdressId = sharedPreferences.getInt(Common.SHARE_PREF_ADDRESS_ID_KEY_AT + position, -1);
+            int sfAdressId = sharedPreferences.getInt(Common.SHARE_PREF_ADDRESS_ID_KEY_IN_POSITION + position, -1);
 
             if (sfAdressId == addressId) {
                 curPositionPager = position;
@@ -441,8 +438,9 @@ public class ModelNetwork {
     }
 
     public void updateInformationByPosition(int position) {
-        int addressId = sharedPreferences.getInt(Common.SHARE_PREF_ADDRESS_ID_KEY_AT + position, -1);
+        int addressId = sharedPreferences.getInt(Common.SHARE_PREF_ADDRESS_ID_KEY_IN_POSITION + position, -1);
         updateInformationByAddressId(addressId, UPDATE_ALL_WIDGET);
+        Toast.makeText(mContext,mContext.getString(R.string.update_successful),Toast.LENGTH_SHORT).show();
         //iWeatherHomePresenter.notifyItemChange(position);
     }
 
@@ -477,9 +475,9 @@ public class ModelNetwork {
 
                                 saveAddressInfoData(0,CURRENT_ADDRESS_ID,cLat,cLng,cAddress);
                             } else {
-                                cLat = sharedPreferences.getFloat(Common.SHARE_PREF_LAT_KEY_AT + CURRENT_ADDRESS_ID, 0f);
-                                cLng = sharedPreferences.getFloat(Common.SHARE_PREF_LNG_KEY_AT + CURRENT_ADDRESS_ID, 0f);
-                                cAddress = sharedPreferences.getString(Common.SHARE_PREF_ADDRESS_NAME_KEY_AT + CURRENT_ADDRESS_ID, "unknown");
+                                cLat = sharedPreferences.getFloat(Common.SHARE_PREF_LAT_KEY_IN_ADDRESS_ID + CURRENT_ADDRESS_ID, 0f);
+                                cLng = sharedPreferences.getFloat(Common.SHARE_PREF_LNG_KEY_IN_ADDRESS_ID + CURRENT_ADDRESS_ID, 0f);
+                                cAddress = sharedPreferences.getString(Common.SHARE_PREF_ADDRESS_NAME_KEY_IN_ADDRESS_ID + CURRENT_ADDRESS_ID, "unknown");
                             }
                             updateWeatherInformation(cLat, cLng, CURRENT_ADDRESS_ID, cAddress, appWidgetId);
                             updateAirQualityIndex(cLat, cLng, CURRENT_ADDRESS_ID);
@@ -512,10 +510,10 @@ public class ModelNetwork {
 
     private void saveAddressInfoData(int position, int addressId, float cLat, float cLng, String cAddress) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(SHARE_PREF_ADDRESS_ID_KEY_AT + position, addressId);
-        editor.putFloat(Common.SHARE_PREF_LAT_KEY_AT + addressId, cLat);
-        editor.putFloat(Common.SHARE_PREF_LNG_KEY_AT + addressId, cLng);
-        editor.putString(Common.SHARE_PREF_ADDRESS_NAME_KEY_AT + addressId, cAddress);
+        editor.putInt(SHARE_PREF_ADDRESS_ID_KEY_IN_POSITION + position, addressId);
+        editor.putFloat(Common.SHARE_PREF_LAT_KEY_IN_ADDRESS_ID + addressId, cLat);
+        editor.putFloat(Common.SHARE_PREF_LNG_KEY_IN_ADDRESS_ID + addressId, cLng);
+        editor.putString(Common.SHARE_PREF_ADDRESS_NAME_KEY_IN_ADDRESS_ID + addressId, cAddress);
         editor.commit();
     }
 

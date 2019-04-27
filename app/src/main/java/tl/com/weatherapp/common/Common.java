@@ -15,21 +15,23 @@ public class Common {
     public static final String INTENT_WEATHER_RESULT = "INTENT_WEATHER_RESULT";
     public static final String DATA = "DATA";
     public static final int CURRENT_ADDRESS_ID = 0;
-    public static final String LIST_WEATHER_RESULT = "LIST_WEATHER_RESULT";
     public static final String ACTION_UPDATE_CONFIG_WEATHER = "ACTION_UPDATE_CONFIG_WEATHER";
-    public static final String SHARE_PREF_LAT_KEY_AT = "SHARE_PREF_LAT_KEY_AT";
-    public static final String SHARE_PREF_LNG_KEY_AT = "SHARE_PREF_LNG_KEY_AT" ;
-    public static final String SHARE_PREF_ADDRESS_NAME_KEY_AT = "SHARE_PREF_ADDRESS_NAME_KEY_AT" ;
-    public static final String SHARE_PREF_WIDGET_ADDRESS_ID_KEY_AT = "SHARE_PREF_WIDGET_ADDRESS_ID_KEY_AT" ;
-    public static final String SHARE_PREF_ADDRESS_ID_KEY_AT = "SHARE_PREF_ADDRESS_ID_KEY_AT" ;
+    public static final String SHARE_PREF_LAT_KEY_IN_ADDRESS_ID = "SHARE_PREF_LAT_KEY_IN_ADDRESS_ID";
+    public static final String SHARE_PREF_LNG_KEY_IN_ADDRESS_ID = "SHARE_PREF_LNG_KEY_IN_ADDRESS_ID" ;
+    public static final String SHARE_PREF_ADDRESS_NAME_KEY_IN_ADDRESS_ID = "SHARE_PREF_ADDRESS_NAME_KEY_IN_ADDRESS_ID" ;
+    public static final String SHARE_PREF_ADDRESS_ID_KEY_BY_WIDGET_ID = "SHARE_PREF_ADDRESS_ID_KEY_BY_WIDGET_ID" ;
+    public static final String SHARE_PREF_ADDRESS_ID_KEY_IN_POSITION = "SHARE_PREF_ADDRESS_ID_KEY_IN_POSITION" ;
     public static final String INTENT_APP_WIDGET_ID = "INTENT_APP_WIDGET_ID";
     public static final String SHARE_PREF_TOTAL_ADDRESS_KEY = "SHARE_PREF_TOTAL_ADDRESS_KEY" ;
     public static final String SHARE_PREF_MAX_ID_KEY = "SHARE_PREF_MAX_ID_KEY";
     public static final int UPDATE_ALL_WIDGET = -1;
     public static final int NO_UPDATE_WIDGET = -2 ;
-    public static final String SHARE_PREF_WEATHER_KEY_AT = "SHARE_PREF_WEATHER_KEY_AT" ;
+    public static final String SHARE_PREF_WEATHER_RESULT_KEY_IN_ADDRESS_ID = "SHARE_PREF_WEATHER_RESULT_KEY_IN_ADDRESS_ID" ;
     public static final int TOTAL_ATTRIBUTE_WEATHER = 8;
-    public static final String SHARE_PREF_AIR_QUALITY_KEY_AT = "SHARE_PREF_AIR_QUALITY_KEY_AT" ;
+    public static final String SHARE_PREF_AIR_QUALITY_KEY_IN_ADDRESS_ID = "SHARE_PREF_AIR_QUALITY_KEY_IN_ADDRESS_ID" ;
+    public static final String SETTINGS = "SETTINGS";
+    public static final String CHANNEL_ID = "Channel id";
+    public static final String SHARED_PREF_SETTING_TIME_NOTIFICATION_KEY = "SHARED_PREF_SETTING_TIME_NOTIFICATION_KEY";
 
     //    public static Location current_location = new Location("");
     public static String ACTION_GET_WEATHER_RESULT_BY_ADDRESS_ID = "ACTION_GET_WEATHER_RESULT_BY_ADDRESS_ID";
@@ -54,7 +56,7 @@ public class Common {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public static String convertUnixToDay(int dt) {
         Date date = new Date(dt * 1000L);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EE");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE");
         String strDate = simpleDateFormat.format(date);
         return strDate;
     }

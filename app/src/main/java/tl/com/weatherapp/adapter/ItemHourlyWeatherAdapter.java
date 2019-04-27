@@ -56,7 +56,7 @@ public class ItemHourlyWeatherAdapter extends RecyclerView.Adapter<ItemHourlyWea
             holder.tvTemp.setTypeface(null, Typeface.NORMAL);
             holder.tvHour.setAlpha(0.8f);
             holder.tvTemp.setAlpha(0.8f);
-            holder.tvHour.setText((Common.convertUnixToTime(forecastWeatherResult.getHourly().getData().get(position).getTime()).substring(0,3))+"h");
+            holder.tvHour.setText((Common.convertUnixToTime(forecastWeatherResult.getHourly().getData().get(position).getTime()).substring(0,3)));
         }
 
         if(tempUnit.equals(mContext.getString(R.string.pref_temp_default_value))){

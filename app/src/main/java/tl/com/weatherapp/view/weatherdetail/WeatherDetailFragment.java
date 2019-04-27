@@ -20,6 +20,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -150,8 +151,13 @@ public class WeatherDetailFragment extends Fragment implements View.OnScrollChan
         relativeLayoutAqi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (aqiDescription.getVisibility() == View.VISIBLE) aqiDescription.setVisibility(View.GONE);
-                else aqiDescription.setVisibility(View.VISIBLE);
+                if (aqiDescription.getVisibility() == View.VISIBLE) {
+                    aqiDescription.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.fade_out));
+                    aqiDescription.setVisibility(View.GONE);
+                } else {
+                    aqiDescription.setVisibility(View.VISIBLE);
+                    aqiDescription.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.fade_in));
+                }
             }
         });
 
@@ -287,12 +293,36 @@ public class WeatherDetailFragment extends Fragment implements View.OnScrollChan
         tvUVIndex.setText(new StringBuilder(String.valueOf(weatherResult.getCurrently().getUvIndex())));
 
 
-
         // TODO: update Air Quality View
         float aqiIndex;
         //get aqi from model
-        if (airQuality != null)
+        if (airQuality != null) {
             aqiIndex = airQuality.getData().aqi;
+            List<String> listAqiDescription = new ArrayList<>();
+            String strIAQI;
+            strIAQI = airQuality.data != null && airQuality.data.iaqi != null && airQuality.data.iaqi.pm25 != null ? String.valueOf(airQuality.data.iaqi.pm25.v) : getString(R.string.aqi_not_available);
+            listAqiDescription.add(String.valueOf(new StringBuilder("").append(getString(R.string.index)).append(" ").append(getString(R.string.aqi_pm25)).append(" ").append(strIAQI)));
+
+            strIAQI = airQuality.data != null && airQuality.data.iaqi != null && airQuality.data.iaqi.pm10 != null ? String.valueOf(airQuality.data.iaqi.pm10.v) :  getString(R.string.aqi_not_available);
+            listAqiDescription.add(String.valueOf(new StringBuilder("").append(getString(R.string.index)).append(" ").append(getString(R.string.aqi_pm10)).append(" ").append(strIAQI)));
+
+            strIAQI = airQuality.data != null && airQuality.data.iaqi != null && airQuality.data.iaqi.co != null ? String.valueOf(airQuality.data.iaqi.co.v) :  getString(R.string.aqi_not_available);
+            listAqiDescription.add(String.valueOf(new StringBuilder("").append(getString(R.string.index)).append(" ").append(getString(R.string.aqi_co)).append(" ").append(strIAQI)));
+
+            strIAQI = airQuality.data != null && airQuality.data.iaqi != null && airQuality.data.iaqi.o3 != null ? String.valueOf(airQuality.data.iaqi.o3.v) :  getString(R.string.aqi_not_available);
+            listAqiDescription.add(String.valueOf(new StringBuilder("").append(getString(R.string.index)).append(" ").append(getString(R.string.aqi_o3)).append(" ").append(strIAQI)));
+
+            strIAQI = airQuality.data != null && airQuality.data.iaqi != null && airQuality.data.iaqi.no2 != null ? String.valueOf(airQuality.data.iaqi.no2.v) :  getString(R.string.aqi_not_available);
+            listAqiDescription.add(String.valueOf(new StringBuilder("").append(getString(R.string.index)).append(" ").append(getString(R.string.aqi_no2)).append(" ").append(strIAQI)));
+
+            strIAQI = airQuality.data != null && airQuality.data.iaqi != null && airQuality.data.iaqi.so2 != null ? String.valueOf(airQuality.data.iaqi.so2.v) : getString(R.string.aqi_not_available);
+            listAqiDescription.add(String.valueOf(new StringBuilder("").append(getString(R.string.index)).append(" ").append(getString(R.string.aqi_so2)).append(" ").append(strIAQI)));
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
+                    R.layout.simple_list_item_in_black_background, android.R.id.text1, listAqiDescription);
+            aqiDescription.setAdapter(adapter);
+
+        }
         else aqiIndex = 0;
 
         //125 is provided for example purpose
@@ -305,37 +335,13 @@ public class WeatherDetailFragment extends Fragment implements View.OnScrollChan
                     float leftMargin = aqiIndex / 500 * scaleWidth;
                     params.leftMargin = (int) leftMargin;
                     aqiIndexIndicator.setLayoutParams(params);
-                }catch (Exception e ){
-                    Toast.makeText(getContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
 
             }
-     });
+        });
 
-        List<String> listAqiDescription = new ArrayList<>();
-        String strIAQI ;
-
-        strIAQI = airQuality.data.iaqi.pm25 != null ?   String.valueOf(airQuality.data.iaqi.pm25.v) :  "N/A";
-        listAqiDescription.add(String.valueOf(new StringBuilder("").append(getString(R.string.index)).append(" PM 2.5 : ").append(strIAQI)));
-
-        strIAQI = airQuality.data.iaqi.pm10 != null ?   String.valueOf(airQuality.data.iaqi.pm10.v) :  "N/A";
-        listAqiDescription.add(String.valueOf(new StringBuilder("").append(getString(R.string.index)).append(" PM 10  : ").append(strIAQI)));
-
-        strIAQI = airQuality.data.iaqi.co != null ?   String.valueOf(airQuality.data.iaqi.co.v) :  "N/A";
-        listAqiDescription.add(String.valueOf(new StringBuilder("").append(getString(R.string.index)).append(" CO     : ").append(strIAQI)));
-
-        strIAQI = airQuality.data.iaqi.o3 != null ?   String.valueOf(airQuality.data.iaqi.o3.v) :  "N/A";
-        listAqiDescription.add(String.valueOf(new StringBuilder("").append(getString(R.string.index)).append(" O3     : ").append(strIAQI)));
-
-        strIAQI = airQuality.data.iaqi.no2 != null ?   String.valueOf(airQuality.data.iaqi.no2.v) :  "N/A";
-        listAqiDescription.add(String.valueOf(new StringBuilder("").append(getString(R.string.index)).append(" NO2    : ").append(strIAQI)));
-
-        strIAQI = airQuality.data.iaqi.so2 != null ?   String.valueOf(airQuality.data.iaqi.so2.v) :  "N/A";
-        listAqiDescription.add(String.valueOf(new StringBuilder("").append(getString(R.string.index)).append(" SO2    : ").append(strIAQI)));
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
-                R.layout.simple_list_item_in_black_background, android.R.id.text1, listAqiDescription);
-        aqiDescription.setAdapter(adapter);
         tvAqiIndex.setText(String.valueOf((int) aqiIndex));
         if (aqiIndex <= 50) {
             tvAqiIndex.setTextColor(getResources().getColor(R.color.aqi_good));

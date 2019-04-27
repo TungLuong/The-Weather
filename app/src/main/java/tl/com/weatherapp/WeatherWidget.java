@@ -5,15 +5,11 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import tl.com.weatherapp.common.Common;
 import tl.com.weatherapp.model.modelnetwork.ModelNetwork;
 
 import static tl.com.weatherapp.common.Common.ACTION_UPDATE_CONFIG_WEATHER;
-import static tl.com.weatherapp.common.Common.ACTION_GET_WEATHER_RESULT_BY_ADDRESS_ID;
-import static tl.com.weatherapp.common.Common.CURRENT_ADDRESS_ID;
-import static tl.com.weatherapp.common.Common.SHARE_PREF_ADDRESS_NAME_KEY_AT;
 
 /**
  * Implementation of App Widget functionality.

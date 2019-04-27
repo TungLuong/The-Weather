@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="SettingTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:fontFamily">@font/roboto_thin</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:textColorSecondary">#ffffff</item>
+        <item name="android:textColorAlertDialogListItem">#ffffff</item>
+        <item name="android:dialogTheme">@style/PreferencesDialogTheme</item>
+        <item name="android:alertDialogTheme">@style/PreferencesDialogTheme</item>
+        <item name="android:timePickerDialogTheme">@style/MyTimePickerDialogStyle</item>
+    </style>
+    <style name="MyTimePickerDialogStyle" parent="@style/ThemeOverlay.AppCompat.Dialog.Alert">
+        <item name="showTitle">true</item>
+        <item name="colorControlActivated">#424242</item>
+        <item name="colorAccent">#424242</item>
+        <item name="android:textColorPrimary">#000</item>
+        <item name="android:textColorSecondary">#000</item>
+        <item name="android:colorButtonNormal">@color/black</item>
+        <item name="android:colorPrimaryDark">#000</item>
+        <item name="android:colorPrimary">#000</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+</resources>

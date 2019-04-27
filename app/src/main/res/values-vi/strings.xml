@@ -45,5 +45,12 @@
     <string name="setting">Cài đặt</string>
     <string name="title_disconnect">Không có mạng</string>
     <string name="message_disconnect">Bạn cần dữ liệu di động hoặc wifi để thực hiện.</string>
-    <string name="index" translatable="true">Chỉ số</string>
+    <string name="index">Chỉ số</string>
+    <string name="pref_notification_group_title" >Thông báo</string>
+    <string name="pref_daily_notification" translatable="true">Thông báo hàng ngày </string>
+    <string name="pref_time_notification" translatable="true">Đặt giờ </string>
+    <string name="content_notification" translatable="true">Mở ứng dụng để cập nhật thời tiết mới nhất</string>
+    <string name="gps_network_enabled">Gps đã bật</string>
+    <string name="update_successful">Cập nhật dữ liệu thành công</string>
+
 </resources>
