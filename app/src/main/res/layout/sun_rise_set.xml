@@ -15,7 +15,8 @@
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:fontFamily="@font/roboto_thin"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white"
+        android:layout_marginStart="8dp" />
 
     <com.hai.semicircle.SemiCircle
         android:id="@+id/sum_semicircle"

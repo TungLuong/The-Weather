@@ -21,13 +21,10 @@ import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-<<<<<<< HEAD
 import android.view.animation.AnimationUtils;
-=======
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
->>>>>>> 991cb8b54193326f1941193f66ad237d0de52efd
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -382,9 +379,7 @@ public class WeatherDetailFragment extends Fragment implements View.OnScrollChan
         tvUVIndex.setText(new StringBuilder(String.valueOf(weatherResult.getCurrently().getUvIndex())));
 
 
-<<<<<<< HEAD
         // TODO: update Air Quality View
-=======
         //Update sun position
         long rise = weatherResult.getDaily().getData().get(0).getSunriseTime()*1000;
         long set = weatherResult.getDaily().getData().get(0).getSunsetTime()*1000;
@@ -404,7 +399,6 @@ public class WeatherDetailFragment extends Fragment implements View.OnScrollChan
             sunSemiCircle.setAngle(angle);
         }
 
->>>>>>> 991cb8b54193326f1941193f66ad237d0de52efd
         float aqiIndex;
         //get aqi from model
         if (airQuality != null) {

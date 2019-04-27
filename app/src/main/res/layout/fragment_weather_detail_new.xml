@@ -588,8 +588,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="250dp"></ListView>
                 </LinearLayout>
-                <include layout="@layout/sun_rise_set"/>
-                <include layout="@layout/wind_details"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -613,6 +611,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         ></android.support.v7.widget.RecyclerView>
+                    <include layout="@layout/sun_rise_set"/>
+                    <include layout="@layout/wind_details"/>
                 </LinearLayout>
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>

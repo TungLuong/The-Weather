@@ -34,7 +34,7 @@
             android:id="@+id/windmill_base"
             android:layout_width="162dp"
             android:layout_height="106dp"
-            android:src="@drawable/windmill_base"
+
             android:layout_marginLeft="16dp"
             app:layout_constraintBottom_toTopOf="@+id/ground"
             app:layout_constraintLeft_toLeftOf="parent"/>
@@ -42,7 +42,6 @@
             android:id="@+id/windmill_wings"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:src="@drawable/windmill_wings"
             app:layout_constraintLeft_toLeftOf="@id/windmill_base"
             app:layout_constraintRight_toRightOf="@id/windmill_base"
             app:layout_constraintTop_toTopOf="@id/windmill_base"

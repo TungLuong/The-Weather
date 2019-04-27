@@ -11,15 +11,13 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.annotation.Nullable;
-<<<<<<< HEAD
 import android.util.Log;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-=======
->>>>>>> 991cb8b54193326f1941193f66ad237d0de52efd
+
 
 import tl.com.weatherapp.R;
 import tl.com.weatherapp.common.Common;
@@ -55,7 +53,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         updateDataSettings();
     }
 
-<<<<<<< HEAD
+
     private void updateDataSettings() {
         sharedPreferences = getActivity().getSharedPreferences(Common.SETTINGS, MODE_PRIVATE);
         strTimeNoti = sharedPreferences.getString(Common.SHARED_PREF_SETTING_TIME_NOTIFICATION_KEY, getString(R.string.time_notification_default));
@@ -64,13 +62,13 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         alarmManager = (AlarmManager) getActivity().getSystemService(ALARM_SERVICE);
         checkTimeNotiPrefEnable(dailyNotiPref.isChecked());
         timeNotiPref.setShouldDisableView(false);
-=======
+
         ListPreference tempPref = (ListPreference) findPreference(getString(R.string.pref_temp_unit));
         ListPreference distancePref = (ListPreference) findPreference(getString(R.string.pref_distance_unit));
         ListPreference speedPref = (ListPreference) findPreference(getString(R.string.pref_speed_unit));
         ListPreference pressurePref = (ListPreference) findPreference(getString(R.string.pref_pressure_unit));
         ListPreference langPref = (ListPreference) findPreference(getString(R.string.pref_lang_key));
->>>>>>> 991cb8b54193326f1941193f66ad237d0de52efd
+
         String[] languages = getResources().getStringArray(R.array.pref_lang_entries);
         String[] langPrefValues = getResources().getStringArray(R.array.pref_lang_values);
 
