@@ -253,24 +253,6 @@ public class WeatherDetailFragment extends Fragment implements View.OnScrollChan
         } else tvCityName.setText(weatherResult.getAddress());
 
 
-//        List<AttributeWeather> list= new ArrayList<>();
-//        list.add(new AttributeWeather(getString(R.string.Humidity),new StringBuffer(String.valueOf(weatherResult.getCurrently().getHumidity() * 100)).append("%").toString()));
-//        list.add(new AttributeWeather(getString(R.string.Pressure),new StringBuilder(String.valueOf(weatherResult.getCurrently().getPressure())).append(" hPa").toString()));
-//        list.add(new AttributeWeather(getString(R.string.WindSpeed),new StringBuilder(String.valueOf(weatherResult.getCurrently().getWindSpeed())).append("m/s").toString()));
-//        list.add(new AttributeWeather(getString(R.string.DewPoint),new StringBuilder(String.valueOf(Common.covertFtoC(weatherResult.getCurrently().getDewPoint()))).append("˚").toString()));
-//        list.add(new AttributeWeather(getString(R.string.CloudCover),new StringBuilder(String.valueOf(weatherResult.getCurrently().getCloudCover())).toString()));
-//        list.add(new AttributeWeather(getString(R.string.UVIndex),new StringBuilder(String.valueOf(weatherResult.getCurrently().getUvIndex())).toString()));
-//        list.add(new AttributeWeather(getString(R.string.Visibility),new StringBuilder(String.valueOf(weatherResult.getCurrently().getVisibility())).append("+ km").toString()));
-//        list.add(new AttributeWeather(getString(R.string.Ozone),new StringBuilder(String.valueOf(weatherResult.getCurrently().getOzone())).toString()));
-//        //set RecyclerView Attribute Weather
-//
-//        ItemAttributeWeatherAdapter itemAttributeWeatherAdapter = new ItemAttributeWeatherAdapter(list);
-//        LinearLayoutManager layoutManager3 = new LinearLayoutManager(getContext());
-//        layoutManager3.setOrientation(LinearLayoutManager.VERTICAL);
-//        //rcvAttributeWeather.setNestedScrollingEnabled(false);
-//        rcvAttributeWeather.setLayoutManager(layoutManager3);
-//        rcvAttributeWeather.setAdapter(itemAttributeWeatherAdapter);
-
         String tempUnit = sharedPreferences.getString(getString(R.string.pref_temp_unit), getString(R.string.pref_temp_default_value));
         String distanceUnit = sharedPreferences.getString(getString(R.string.pref_distance_unit), getString(R.string.pref_distance_default_value));
         String speedUnit = sharedPreferences.getString(getString(R.string.pref_speed_unit), getString(R.string.pref_speed_default_value));
@@ -357,9 +339,9 @@ public class WeatherDetailFragment extends Fragment implements View.OnScrollChan
 
         //set Windmill rotating animation
         windmillWings.clearAnimation();
-        double pinWheelDiameter = 10; //diameter in meter
+        double windmillWingsDiameter = 10; //diameter in meter
 
-        double roundPerSec = windSpeedMps/(Math.PI * pinWheelDiameter);
+        double roundPerSec = windSpeedMps/(Math.PI * windmillWingsDiameter);
         int duration = (int) (1000/(roundPerSec));
         RotateAnimation rotate = new RotateAnimation(0, -360,
                 Animation.RELATIVE_TO_SELF, 0.5f,
@@ -378,8 +360,6 @@ public class WeatherDetailFragment extends Fragment implements View.OnScrollChan
 
         tvUVIndex.setText(new StringBuilder(String.valueOf(weatherResult.getCurrently().getUvIndex())));
 
-
-        // TODO: update Air Quality View
         //Update sun position
         long rise = weatherResult.getDaily().getData().get(0).getSunriseTime()*1000;
         long set = weatherResult.getDaily().getData().get(0).getSunsetTime()*1000;
