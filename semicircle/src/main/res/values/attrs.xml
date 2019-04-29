@@ -13,6 +13,7 @@
         <attr name="sunriseTime" format="string"/>
         <attr name="sunsetTime" format="string"/>
         <attr name="horizontalColor" format="color"/>
+        <attr name="timeTextTopMargin" format="dimension"/>
     </declare-styleable>
 
     <declare-styleable name="SemiCircleViewTheme">

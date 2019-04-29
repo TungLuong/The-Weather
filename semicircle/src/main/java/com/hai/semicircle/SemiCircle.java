@@ -47,6 +47,7 @@ public class SemiCircle extends View {
 
     private int mAngle = 0;
     private boolean mEnabled = true;
+    private int mTextTopMargin = 0;
 
     public SemiCircle(Context context) {
         super(context);
@@ -118,6 +119,7 @@ public class SemiCircle extends View {
             mSunriseTime = array.getString(R.styleable.SemiCircle_sunriseTime);
             mSunsetTime = array.getString(R.styleable.SemiCircle_sunsetTime);
             horizontalColor = array.getColor(R.styleable.SemiCircle_horizontalColor, horizontalColor);
+            mTextTopMargin = (int) array.getDimension(R.styleable.SemiCircle_timeTextTopMargin, mTextTopMargin);
 
             array.recycle();
         }
@@ -198,7 +200,7 @@ public class SemiCircle extends View {
         mThumbXPos = (int) (mArcRadius * Math.cos(Math.toRadians(thumbAngle)));
         mThumbYPos = (int) (mArcRadius * Math.sin(Math.toRadians(thumbAngle)));
 
-        setMeasuredDimension(width, (int) (height*1.2));
+        setMeasuredDimension(width, (int) (height*1.3));
     }
 
     @Override
@@ -212,11 +214,11 @@ public class SemiCircle extends View {
 
         canvas.save();
         canvas.translate(mArcRect.centerX(), mArcRect.centerY());
-        canvas.drawText(mSunsetTime, mArcRadius - mRisePaint.measureText(mSunriseTime)/2, 50, mRisePaint);
-        canvas.drawText(mSunriseTime, -mArcRadius - mSetPaint.measureText(mSunsetTime)/2, 50, mSetPaint);
+        canvas.drawText(mSunsetTime, mArcRadius - mRisePaint.measureText(mSunriseTime)/2, mTextTopMargin, mRisePaint);
+        canvas.drawText(mSunriseTime, -mArcRadius - mSetPaint.measureText(mSunsetTime)/2, mTextTopMargin, mSetPaint);
         canvas.drawLine(-mArcRadius*1.5f, 0, mArcRadius*1.5f, 0, mHorizontalPaint);
-        canvas.drawCircle(-mArcRadius, 0 , 5, mDotPaint);
-        canvas.drawCircle(mArcRadius, 0 , 5, mDotPaint);
+        canvas.drawCircle(-mArcRadius, 0 , 7, mDotPaint);
+        canvas.drawCircle(mArcRadius, 0 , 7, mDotPaint);
         canvas.restore();
 
         if (mEnabled) {
