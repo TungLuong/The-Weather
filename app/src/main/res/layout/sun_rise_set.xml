@@ -33,6 +33,7 @@
         app:sunriseTime="06:18"
         app:sunsetTime="18:06"
         app:horizontalColor="#4E4E4E"
+        app:timeTextTopMargin="30dp"
         app:enabled="true"/>
 
 </LinearLayout>
