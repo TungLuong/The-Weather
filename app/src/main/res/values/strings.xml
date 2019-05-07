@@ -78,6 +78,7 @@
         <item>km/h</item>
         <item>mph</item>
         <item>m/s</item>
+        <item>Beaufort</item>
     </string-array>
     <string name="pref_lang_title" translatable="true">Current Language</string>
     <string name="pref_lang_key" translatable="false">Language</string>

@@ -281,6 +281,8 @@ public class WeatherDetailFragment extends Fragment implements View.OnScrollChan
             windSpeed.setText(Common.mpsToKmph(windSpeedMps) + " " + speedUnit);
         } else if (speedUnit.equals("mph")) {
             windSpeed.setText(Common.mpsToMph(windSpeedMps) + " " + speedUnit);
+        } else if(speedUnit.equals("Beaufort")){
+            windSpeed.setText(Common.mpsToBeaufort(windSpeedMps) + " " + speedUnit);
         }
 
         String windDirectionText = "";
