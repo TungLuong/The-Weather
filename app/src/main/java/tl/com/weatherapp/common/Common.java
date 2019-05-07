@@ -77,6 +77,71 @@ public class Common {
         return(int) (0.277778 * 3.6 * speed);
     }
 
+    public static int mpsToBeaufort(double speed){
+        int speedInKmph = mpsToKmph(speed);
+        int bft = 0;
+        if(speedInKmph <  1){
+            bft = 0;
+        }
+        else if(speedInKmph < 6){
+            bft = 1;
+        }
+        else if(speedInKmph < 12){
+            bft = 2;
+        }
+        else if(speedInKmph < 20){
+            bft = 3;
+        }
+        else if(speedInKmph < 29){
+            bft = 4;
+        }
+        else if(speedInKmph < 39){
+            bft = 5;
+        }
+        else if(speedInKmph < 50){
+            bft = 6;
+        }
+        else if(speedInKmph < 62){
+            bft = 7;
+        }
+        else if(speedInKmph < 75){
+            bft = 8;
+        }
+        else if(speedInKmph < 89){
+            bft = 9;
+        }
+        else if(speedInKmph < 103){
+            bft = 10;
+        }
+        else if(speedInKmph < 118){
+            bft = 11;
+        }
+        else if(speedInKmph < 134){
+            bft = 12;
+        }
+        else if(speedInKmph < 150){
+            bft = 13;
+        }
+        else if(speedInKmph < 167){
+            bft = 14;
+        }
+        else if(speedInKmph < 184){
+            bft = 15;
+        }
+        else if(speedInKmph < 202){
+            bft = 16;
+        }
+        else if(speedInKmph < 221){
+            bft = 17;
+        }
+        else{
+            bft = 18;
+        }
+
+
+        return bft;
+    }
+
     public static String pressureConverter(double value,String unit){
         String output = "";
         switch (unit){

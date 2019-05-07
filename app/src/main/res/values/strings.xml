@@ -78,6 +78,7 @@
         <item>km/h</item>
         <item>mph</item>
         <item>m/s</item>
+        <item>Beaufort</item>
     </string-array>
     <string name="pref_lang_title" translatable="true">Current Language</string>
     <string name="pref_lang_key" translatable="false">Language</string>
@@ -127,5 +128,6 @@
     <string name="content_notification" translatable="true">Open application to update</string>
     <string name="time_notification_default" translatable="false">06:00</string>
     <string name="update_successful">update information successful</string>
+    <string name="feels_like">feels like:</string>
 
 </resources>
