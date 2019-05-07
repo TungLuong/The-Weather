@@ -290,10 +290,13 @@ public class ModelNetwork {
     private static void updatAppWidget(WeatherResult weatherResult, RemoteViews views, int appWidgetId) {
         String tempUnit = defSharedPreferences.getString(mContext.getString(R.string.pref_temp_unit), mContext.getString(R.string.pref_temp_default_value));
         String temp = null;
+        String tempFeelsLike = null;
         if (tempUnit.equals(mContext.getString(R.string.pref_temp_default_value))) {
-            temp = Common.covertFtoC(weatherResult.getCurrently().getTemperature()) + "°";
+            temp = Common.covertFtoC(weatherResult.getCurrently().getTemperature()) + "";
+            tempFeelsLike =Common.covertFtoC(weatherResult.getCurrently().getApparentTemperature()) + "°";
         } else {
-            temp = (int) weatherResult.getCurrently().getTemperature() + "°";
+            temp = (int) weatherResult.getCurrently().getTemperature() + "";
+            tempFeelsLike = (int) weatherResult.getCurrently().getApparentTemperature() + "°";
         }
 
 
@@ -305,7 +308,8 @@ public class ModelNetwork {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
             lastTimeUpdate = Common.convertUnixToTime(weatherResult.getCurrently().getTime());
         }
-        views.setTextViewText(R.id.tv_time_update, lastTimeUpdate);
+        views.setTextViewText(R.id.tv_feels_like, mContext.getResources().getString(R.string.feels_like) + " " +  tempFeelsLike);
+        views.setTextViewText(R.id.tv_summary,weatherResult.getCurrently().getSummary());
         String lastLocation = weatherResult.getAddress();
         views.setTextViewText(R.id.tv_location, lastLocation);
 
