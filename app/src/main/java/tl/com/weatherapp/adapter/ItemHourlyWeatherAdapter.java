@@ -7,6 +7,7 @@ import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,18 +46,19 @@ public class ItemHourlyWeatherAdapter extends RecyclerView.Adapter<ItemHourlyWea
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onBindViewHolder(@NonNull ItemHourlyViewHolder holder, int position) {
+        Typeface typeFace = ResourcesCompat.getFont(mContext,R.font.roboto_thin);
         if (position == 0){
-            holder.tvHour.setTypeface(null, Typeface.BOLD);
+            holder.tvHour.setTypeface(typeFace,Typeface.BOLD);
             holder.tvHour.setAlpha(1.0f);
-            holder.tvTemp.setTypeface(null, Typeface.BOLD);
+            holder.tvTemp.setTypeface(typeFace,Typeface.BOLD);
             holder.tvTemp.setAlpha(1.0f);
             holder.tvHour.setText("now");
         }else {
-            holder.tvHour.setTypeface(null, Typeface.NORMAL);
-            holder.tvTemp.setTypeface(null, Typeface.NORMAL);
+            holder.tvHour.setTypeface(typeFace, Typeface.NORMAL);
+            holder.tvTemp.setTypeface(typeFace, Typeface.NORMAL);
             holder.tvHour.setAlpha(0.8f);
             holder.tvTemp.setAlpha(0.8f);
-            holder.tvHour.setText((Common.convertUnixToTime(forecastWeatherResult.getHourly().getData().get(position).getTime()).substring(0,3)));
+            holder.tvHour.setText((Common.convertUnixToTime(forecastWeatherResult.getHourly().getData().get(position).getTime()).substring(0,3)) + "h");
         }
 
         if(tempUnit.equals(mContext.getString(R.string.pref_temp_default_value))){
