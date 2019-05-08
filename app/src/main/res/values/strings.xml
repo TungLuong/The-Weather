@@ -128,6 +128,6 @@
     <string name="content_notification" translatable="true">Open application to update</string>
     <string name="time_notification_default" translatable="false">06:00</string>
     <string name="update_successful">update information successful</string>
-    <string name="feels_like">feels like:</string>
+    <string name="feels_like">Feels like:</string>
 
 </resources>
