@@ -11,10 +11,10 @@
     <string name="add_widget" translatable="false">Add widget</string>
     <string name="google_map_API_key" translatable="false">AIzaSyAsvRrYBZ770RpBDQNsbaOCsz3XZjD9Vc8</string>
     <string name="title" translatable="false">Weather Application</string>
-    <string name="gps_network_not_enabled" translatable="true">GPS Network not enabled</string>
+    <string name="gps_network_not_enabled" translatable="true">GPS disabled</string>
     <string name="open_location_settings" translatable="true">Setting</string>
     <string name="cancel" translatable="true">Cancel</string>
-    <string name="gps_network_enabled">GPS Network enable</string>
+    <string name="gps_network_enabled">GPS enable</string>
     <string name="Humidity" translatable="true">Humidity</string>
     <string name="Pressure" translatable="true">Pressure</string>
     <string name="WindSpeed" translatable="true">Wind Speed</string>
@@ -24,7 +24,7 @@
     <string name="Visibility" translatable="true">Visibility</string>
     <string name="Ozone">Ozone</string>
     <string name="last_update" translatable="true">Last update</string>
-    <string name="delete" translatable="true">Xóa</string>
+    <string name="delete" translatable="true">Delete</string>
 
     <string name="details_title" translatable="true">Details</string>
     <string name="next_24_hours_title" translatable="true">Next 24 Hours</string>
@@ -111,7 +111,7 @@
     <string name="pref_help" translatable="true">Help</string>
     <string name="pref_about" translatable="true">About</string>
     <string name="title_disconnect" translatable="true">No Internet Connection</string>
-    <string name="message_disconnect" translatable="true">You need to have Mobile Data or wifi to access this.</string>
+    <string name="message_disconnect" translatable="true">You need to turn on Mobile Data or wifi to access this.</string>
     <string name="index" translatable="true">Index</string>
     <string name="pref_notification_group_title" translatable="true">Notification</string>
     <string name="pref_daily_notification" translatable="true">Daily notification</string>
@@ -127,7 +127,7 @@
     <string name="aqi_not_available" translatable="false">N/A</string>
     <string name="content_notification" translatable="true">Open application to update</string>
     <string name="time_notification_default" translatable="false">06:00</string>
-    <string name="update_successful">update information successful</string>
+    <string name="update_successful">Data updated successfully</string>
     <string name="feels_like">Feels like:</string>
 
 </resources>
