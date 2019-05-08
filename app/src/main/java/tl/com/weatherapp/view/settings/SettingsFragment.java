@@ -157,7 +157,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         Intent intent = new Intent(getActivity(), NotificationReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 1253, intent, 0);
         alarmManager.cancel(pendingIntent);
-        Toast.makeText(getActivity(), "Cancel Alarm ", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(), "Cancel Alarm ", Toast.LENGTH_SHORT).show();
 
     }
 
@@ -165,7 +165,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         Intent intent = new Intent(getActivity(), NotificationReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 1253, intent, 0);
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, curCalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-        Toast.makeText(getActivity(), "Start Alarm  ", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(), "Start Alarm  ", Toast.LENGTH_SHORT).show();
     }
 
     @Override

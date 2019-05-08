@@ -412,8 +412,6 @@ public class WeatherDetailFragment extends Fragment implements View.OnScrollChan
         }
         else aqiIndex = 0;
 
-        //125 is provided for example purpose
-
         airQualityIndexScale.post(new Runnable() {
             public void run() {
                 try {
@@ -423,7 +421,7 @@ public class WeatherDetailFragment extends Fragment implements View.OnScrollChan
                     params.leftMargin = (int) leftMargin;
                     aqiIndexIndicator.setLayoutParams(params);
                 } catch (Exception e) {
-                    Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
 
             }
