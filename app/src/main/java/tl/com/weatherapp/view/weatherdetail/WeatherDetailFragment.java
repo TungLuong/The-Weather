@@ -216,10 +216,11 @@ public class WeatherDetailFragment extends Fragment implements View.OnScrollChan
     private void getWeatherInfo(WeatherResult weatherResult) {
         if (weatherResult == null) {
             refreshLayout.setRefreshing(true);
-            Uri uri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + getContext().getPackageName() + "/drawable/" + "blue_sky_2");
+            Uri uri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + getContext().getPackageName() + "/drawable/" + "clear_day");
             Picasso.get()
                     .load(uri)
                     .fit()
+                    .centerCrop()
                     .into(background);
             return;
         }
@@ -228,6 +229,7 @@ public class WeatherDetailFragment extends Fragment implements View.OnScrollChan
         Picasso.get()
                 .load(uri)
                 .fit()
+                .centerCrop()
                 .into(background);
 
 
