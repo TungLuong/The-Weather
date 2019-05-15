@@ -69,4 +69,5 @@
     <string name="aqi_pm25">Chỉ số PM 2.5:</string>
     <string name="aqi_so2">Chỉ số Sulphur Dioxide(SO2):</string>
     <string name="aqi_co">Chỉ số Carbon Monoxide(CO):</string>
+    <string name="aqi_no2">Chỉ số Nitrogen Dioxide(NO2):</string>
 </resources>
