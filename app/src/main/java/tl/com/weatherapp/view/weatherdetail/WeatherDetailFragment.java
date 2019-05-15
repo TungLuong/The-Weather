@@ -388,22 +388,22 @@ public class WeatherDetailFragment extends Fragment implements View.OnScrollChan
             List<String> listAqiDescription = new ArrayList<>();
             String strIAQI;
             strIAQI = airQuality.data != null && airQuality.data.iaqi != null && airQuality.data.iaqi.pm25 != null ? String.valueOf(airQuality.data.iaqi.pm25.v) : getString(R.string.aqi_not_available);
-            listAqiDescription.add(String.valueOf(new StringBuilder("").append(getString(R.string.index)).append(" ").append(getString(R.string.aqi_pm25)).append(" ").append(strIAQI)));
+            listAqiDescription.add(String.valueOf(new StringBuilder("").append(getString(R.string.aqi_pm25)).append(" ").append(strIAQI)));
 
             strIAQI = airQuality.data != null && airQuality.data.iaqi != null && airQuality.data.iaqi.pm10 != null ? String.valueOf(airQuality.data.iaqi.pm10.v) :  getString(R.string.aqi_not_available);
-            listAqiDescription.add(String.valueOf(new StringBuilder("").append(getString(R.string.index)).append(" ").append(getString(R.string.aqi_pm10)).append(" ").append(strIAQI)));
+            listAqiDescription.add(String.valueOf(new StringBuilder("").append(getString(R.string.aqi_pm10)).append(" ").append(strIAQI)));
 
             strIAQI = airQuality.data != null && airQuality.data.iaqi != null && airQuality.data.iaqi.co != null ? String.valueOf(airQuality.data.iaqi.co.v) :  getString(R.string.aqi_not_available);
-            listAqiDescription.add(String.valueOf(new StringBuilder("").append(getString(R.string.index)).append(" ").append(getString(R.string.aqi_co)).append(" ").append(strIAQI)));
+            listAqiDescription.add(String.valueOf(new StringBuilder("").append(getString(R.string.aqi_co)).append(" ").append(strIAQI)));
 
             strIAQI = airQuality.data != null && airQuality.data.iaqi != null && airQuality.data.iaqi.o3 != null ? String.valueOf(airQuality.data.iaqi.o3.v) :  getString(R.string.aqi_not_available);
-            listAqiDescription.add(String.valueOf(new StringBuilder("").append(getString(R.string.index)).append(" ").append(getString(R.string.aqi_o3)).append(" ").append(strIAQI)));
+            listAqiDescription.add(String.valueOf(new StringBuilder("").append(getString(R.string.aqi_o3)).append(" ").append(strIAQI)));
 
             strIAQI = airQuality.data != null && airQuality.data.iaqi != null && airQuality.data.iaqi.no2 != null ? String.valueOf(airQuality.data.iaqi.no2.v) :  getString(R.string.aqi_not_available);
-            listAqiDescription.add(String.valueOf(new StringBuilder("").append(getString(R.string.index)).append(" ").append(getString(R.string.aqi_no2)).append(" ").append(strIAQI)));
+            listAqiDescription.add(String.valueOf(new StringBuilder("").append(getString(R.string.aqi_no2)).append(" ").append(strIAQI)));
 
             strIAQI = airQuality.data != null && airQuality.data.iaqi != null && airQuality.data.iaqi.so2 != null ? String.valueOf(airQuality.data.iaqi.so2.v) : getString(R.string.aqi_not_available);
-            listAqiDescription.add(String.valueOf(new StringBuilder("").append(getString(R.string.index)).append(" ").append(getString(R.string.aqi_so2)).append(" ").append(strIAQI)));
+            listAqiDescription.add(String.valueOf(new StringBuilder("").append(getString(R.string.aqi_so2)).append(" ").append(strIAQI)));
 
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
                     R.layout.simple_list_item_in_black_background, android.R.id.text1, listAqiDescription);

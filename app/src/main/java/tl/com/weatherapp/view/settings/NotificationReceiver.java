@@ -24,8 +24,6 @@ public class NotificationReceiver  extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Toast.makeText(context,"Da vao NotificationReceiver", Toast.LENGTH_LONG).show();
-
         Datum2 curHourlyWeather = getCurHourlyWeather(context);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         String tempUnit = sharedPreferences.getString(context.getString(R.string.pref_temp_unit), context.getString(R.string.pref_temp_default_value));

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView
-    android:alpha="0.6"
-    android:textColor="@color/white"
+    android:textColor="#7fffffff"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@android:id/text1"
     android:layout_width="match_parent"
     android:layout_height="@dimen/simple_item_view_height"
+    android:fontFamily="@font/roboto_thin"
+    android:textSize="16sp"
     android:textAppearance="?android:attr/textAppearanceListItemSmall"
     android:gravity="center_vertical"
     android:paddingStart="?android:attr/listPreferredItemPaddingStart"
