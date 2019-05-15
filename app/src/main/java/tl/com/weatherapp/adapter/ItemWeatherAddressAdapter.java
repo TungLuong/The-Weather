@@ -81,11 +81,12 @@ public class ItemWeatherAddressAdapter extends RecyclerSwipeAdapter<ItemWeatherA
                 iListenerWeatherAddressAdapter.openWeatherHomeFragment();
             }
         });
-        String icon_name = weatherResultList.get(position).getCurrently().getIcon().replace('-', '_')+"_compact";
+        String icon_name = weatherResultList.get(position).getCurrently().getIcon().replace('-', '_');
         Uri uri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + mContext.getPackageName() + "/drawable/" + icon_name);
         Picasso.get()
                 .load(uri)
                 .fit()
+                .centerCrop()
                 .into(holder.background);
         if (position == 0) {
             holder.icLocation.setVisibility(View.VISIBLE);
